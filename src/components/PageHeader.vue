@@ -1,9 +1,9 @@
 <template>
   <header>
     <div>
-      <router-link to="/">Feed</router-link>
-      <router-link to="/about">Recommond</router-link>
-      <router-link to="/board/list">Rank</router-link>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/board/list">게시판</router-link>
     </div>
   </header>
 </template>
