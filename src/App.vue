@@ -1,5 +1,6 @@
 <template>
   <PageHeader></PageHeader>
+  <PageLeft ></PageLeft>
   <router-view></router-view>
   <PageFooter></PageFooter>
 </template>

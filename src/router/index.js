@@ -1,32 +1,47 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import PageHome from '@/views/PageHome.vue'
 
+import PageHome         from '@/views/PageHome.vue'
+import PageFeed         from '@/views/PageFeed.vue'
+import PageRecommend    from '@/views/PageRecommend.vue'
+import PageRank         from '@/views/PageRank.vue'
+import PageSign         from '@/views/PageSign.vue'
+import PageLogin        from '@/views/PageLogin.vue'
 
 const routes = [
     {
-        path: '/',       // 스프링으로 치면 킨트롤러부분같은 느낌이다.
+        path: '/',       
         name: 'PageHome',  
         component: PageHome
     },
     {
         path: '/feed',
         name: 'Feed',
-        component: () => import(/* webpackChunkName: "about" */ '../views/PageFeed.vue')
+        component: PageFeed
     },
     {
-        path: '/recommend',       // 스프링으로 치면 킨트롤러부분같은 느낌이다.
+        path: '/recm',       
         name: 'PageRecommend',  
-        component: () => import(/* webpackChunkName: "about" */ '../views/PageRecommend.vue')
+        component: PageRecommend
     },
     {
-        path: '/rank',       // 스프링으로 치면 킨트롤러부분같은 느낌이다.
+        path: '/rank',       
         name: 'PageRank',  
-        component: () => import(/* webpackChunkName: "about" */ '../views/PageRank.vue')
+        component: PageRank
+    },
+    {
+        path: '/sign',       
+        name: 'PageSign',  
+        component: PageSign
+    },
+    {
+        path: '/login',       
+        name: 'PageLogin',  
+        component: PageLogin
     },
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(process.env.BASE_URL, '/plume/'),
     routes
 });
 
