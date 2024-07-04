@@ -8,36 +8,12 @@ import PageSign         from '@/views/PageSign.vue'
 import PageLogin        from '@/views/PageLogin.vue'
 
 const routes = [
-    {
-        path: '/',       
-        name: 'PageHome',  
-        component: PageHome
-    },
-    {
-        path: '/feed',
-        name: 'Feed',
-        component: PageFeed
-    },
-    {
-        path: '/recm',       
-        name: 'PageRecommend',  
-        component: PageRecommend
-    },
-    {
-        path: '/rank',       
-        name: 'PageRank',  
-        component: PageRank
-    },
-    {
-        path: '/sign',       
-        name: 'PageSign',  
-        component: PageSign
-    },
-    {
-        path: '/login',       
-        name: 'PageLogin',  
-        component: PageLogin
-    },
+    { path: '/'     , name: 'PageHome'     , component: PageHome        },
+    { path: '/feed' , name: 'Feed'         , component: PageFeed        },
+    { path: '/recm' , name: 'PageRecommend', component: PageRecommend   },
+    { path: '/rank' , name: 'PageRank'     , component: PageRank        },
+    { path: '/sign' , name: 'PageSign'     , component: PageSign        },
+    { path: '/login', name: 'PageLogin'    , component: PageLogin       },
 ]
 
 const router = createRouter({
@@ -45,4 +21,4 @@ const router = createRouter({
     routes
 });
 
-export default router
+export default router;
