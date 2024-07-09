@@ -2,10 +2,22 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';  // router 객체 가져오기
-import 'bootstrap';             // bootstrap 객체 가져오기
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';  //bootsstrap 아이콘
+import store from './store'
 
-const app = createApp(App); 
+// 프라임뷰
+import PrimeVue from 'primevue/config';
+import 'primeicons/primeicons.css';
+import Aura from '@primevue/themes/aura';
+
+const app = createApp(App).use(store).use(router);
 app.use(router);    // vue router를 app에 등록
+
+// primevue app에 등록
+app.use(PrimeVue, {         
+    // Default theme configuration
+    theme: {
+        preset: Aura,
+    }
+});  
+
 app.mount('#app');

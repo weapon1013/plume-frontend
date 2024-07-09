@@ -1,6 +1,6 @@
 <template>
     <Sidebar></Sidebar>
-    <div class="rank">
+    <div class="flex-shrink-0">
       <h1>This is an Rank page</h1>
     </div>
 </template>

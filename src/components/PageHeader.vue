@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container flex-shrink-0">
         <header class="d-flex justify-content-between align-items-center border-bottom py-3">
             <div class="d-flex align-items-center">
                 <div class="border-right">
