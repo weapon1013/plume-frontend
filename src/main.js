@@ -6,18 +6,17 @@ import store from './store'
 
 // 프라임뷰
 import PrimeVue from 'primevue/config';
-import 'primeicons/primeicons.css';
-import Aura from '@primevue/themes/aura';
+import "primeflex/primeflex.css";
+import "primeflex/themes/primeone-light.css";
+import "primeicons/primeicons.css";
 
-const app = createApp(App).use(store).use(router);
-app.use(router);    // vue router를 app에 등록
+
+const app = createApp(App).use(store);
+
+// vue router를 app에 등록
+app.use(router);    
 
 // primevue app에 등록
-app.use(PrimeVue, {         
-    // Default theme configuration
-    theme: {
-        preset: Aura,
-    }
-});  
+app.use(PrimeVue, { unstyled: true });
 
 app.mount('#app');

@@ -1,36 +1,53 @@
 <template>
-    <div class="container flex-shrink-0">
-        <header class="d-flex justify-content-between align-items-center border-bottom py-3">
-            <div class="d-flex align-items-center">
-                <div class="border-right">
-                    <router-link to="/" class="fs-2 m-3">
-                        <i class="bi bi-search-heart"></i>
+    <header class="layout-topbar">
+        <div class="layout-topbar-start">
+            <router-link to="/">
+                <img src="../assets/img/plume_logo_temp.svg">
+            </router-link>
+            <i class="pi pi-search"></i>
+            <input placeholder="검색창">
+        </div>
+        <div class="layout-topbar-mid">
+            <ul class="list-none">
+                <li>
+                    <router-link to="/feed">
+                        <span>Feed</span>
                     </router-link>
-                </div>
-                <div class="ms-3">
-                    <input type="search" placeholder="Search..." aria-label="Search" class="form-control ml-3"/>
-                </div>
-            </div>
-            <ul class="d-flex nav">
-                <li><router-link to="/feed" class="nav-link px-2" >Feed</router-link></li>
-                <li><router-link to="/recm" class="nav-link px-2" >Recommend</router-link></li>
-                <li><router-link to="/rank" class="nav-link px-2" >Rank</router-link></li>
+                </li>
+                <li>
+                    <router-link to="/recm">
+                        <span>Recommend</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/rank">
+                        <span>Rank</span>
+                    </router-link>
+                </li>
             </ul>
-            <div class="d-flex">
-                <button type="button" class="btn btn-outline-primary me-2"><router-link to="/sign" class="nav-link">Sign up</router-link></button>
-                <button type="button" class="btn btn-outline-primary"><router-link to="/login" class="nav-link">Login</router-link></button>
-            </div>
-        </header>
-    </div>
+        </div>
+        <div class="layout-topbar-end">
+            <router-link to="/sign" class="block-action">
+                <span>Sign up</span>
+            </router-link>
+            <router-link to="/login" class="block-action">
+                <span>Login</span>
+            </router-link>
+        </div>
+    </header>
 </template>
 
 <script>
 export default {
-    
+
 }
 
 </script>
 
 <style scoped>
+@import "../assets/css/index.css";
+@import 'primeicons/primeicons.css';
+
+
 .border-right{ border-right: 1px solid #ccc;}
 </style>
