@@ -1,10 +1,10 @@
 <template>
-    <main class="d-flex flex-nowrap">
-      <Sidebar></Sidebar>
+    <Sidebar></Sidebar>
+    <div class="layout-content-wrapper">
       <div class="col-md-9">
-        <h1>This is an Feed page</h1>
+        <h5>This is an Feed page</h5>
       </div>
-    </main>
+    </div>
 </template>
 
 <script>
@@ -18,5 +18,4 @@ export default {
 </script>
 
 <style scoped>
-main{height: -webkit-fill-available; max-height: 100vh;}
 </style>

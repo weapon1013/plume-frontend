@@ -45,9 +45,24 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/index.css";
-@import 'primeicons/primeicons.css';
 
+.list-none{
+    display: flex;
+    align-items: center;
+}
 
-.border-right{ border-right: 1px solid #ccc;}
+.list-none li{
+    display: flex;
+    padding: .5rem 1rem;
+    align-items: center;
+    overflow: hidden;
+    position:relative;
+}
+
+.list-none li a{
+    text-decoration-line: none;
+    font-weight: 500;
+    color: var(--primary-menu-color);
+}
+
 </style>
