@@ -9,6 +9,7 @@ import PrimeVue from 'primevue/config';
 import "primeflex/primeflex.css";
 import "primeflex/themes/primeone-light.css";
 import "primeicons/primeicons.css";
+import Aura from '@primevue/themes/aura';
 
 
 const app = createApp(App).use(store);
@@ -17,6 +18,17 @@ const app = createApp(App).use(store);
 app.use(router);    
 
 // primevue app에 등록
-app.use(PrimeVue, { unstyled: true });
+// app.use(PrimeVue);
+app.use(PrimeVue, {
+  // Default theme configuration
+  theme: {
+      preset: Aura,
+      options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: false
+      }
+  }
+});
 
 app.mount('#app');

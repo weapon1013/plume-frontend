@@ -27,20 +27,23 @@
             </ul>
         </div>
         <div class="layout-topbar-end">
-            <router-link to="/sign" class="block-action">
-                <span>Sign up</span>
-            </router-link>
-            <router-link to="/login" class="block-action">
-                <span>Login</span>
-            </router-link>
+            <LoginModal></LoginModal>
+            <SignModal></SignModal>
         </div>
     </header>
 </template>
 
 <script>
-export default {
+import LoginModal from "../components/mdLogin.vue";
+import SignModal from "../components/mdSign.vue";
 
-}
+export default {
+    name: "App",
+    components: {
+        LoginModal,    // 로그인 모달창
+        SignModal      // 회원가입 모달창
+    },
+};
 
 </script>
 

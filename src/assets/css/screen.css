@@ -1,8 +1,8 @@
 /* 노트북 & 테블릿 가로 (해상도 1024px ~ 1279px)*/ 
 @media all and (min-width:1024px){
     .layout-topbar{height: 60px;}
-    .layout-sidebar{height: 90vh;}
-    .layout-content-wrapper{min-height: 90vh;}
+    .layout-sidebar{height: 88vh;}
+    .layout-content-wrapper{min-height: 88vh;}
 } 
   
 /* 테블릿 가로 (해상도 768px ~ 1023px)*/ 
