@@ -1,0 +1,117 @@
+<template>
+    <div class="card flex justify-center">
+        <Button label="SignDetail" @click="visible = true" />
+        <Dialog v-model:visible="visible" modal header="회원가입창">
+            <div class="modal_container">
+                <div class="modal_left">
+                    <div class="flex justify-content-center my-5">
+                        <img src="../assets/img/plume_logo_temp.svg">
+                    </div>
+                    <div class="mx-4">
+                        <div class="flex flex-column gap-2">
+                            <label for="username">아이디</label>
+                            <InputText id="username" v-model="nameVal" aria-describedby="username-help" />
+                            <small id="username-help">Enter your username to reset your password.</small>
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="username">비밀번호</label>
+                            <Password v-model="passVal" toggleMask />
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="username">비밀번호</label>
+                            <Password v-model="passVal2" toggleMask />
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="username">생년월일</label>
+                            <DatePicker v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="username">성별</label>
+                            <div class="flex items-center">
+                                <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
+                                <label for="sex1" class="ml-2">남성</label>
+                            </div>
+                            <div class="flex items-center">
+                                <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
+                                <label for="sex2" class="ml-2">여성</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="username">수입</label>
+                            <div v-for="category in categories" :key="category.key" class="flex items-center">
+                                <RadioButton v-model="selectedCategory" :inputId="category.key" name="dynamic" :value="category.name" />
+                                <label :for="category.key" class="ml-2">{{ category.name }}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="email">이메일</label>
+                            <InputText id="email" v-model="emailVal" />
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label for="certify">인증번호입력</label>
+                            <InputText id="certify" v-model="certifyVal" />
+                        </div>
+                        <div class="flex flex-column gap-2">
+                            <label>약관동의화면</label>
+                            <textarea>아이우에오 여기는 약관동의화면입니다</textarea>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
+                        <Button type="button" label="회원가입" @click="visible = false" severity="help" raised></Button>
+                    </div>
+                </div>
+                <div class="modal_right">
+                    배경배경
+                </div>
+            </div>
+        </Dialog>
+    </div>
+</template>
+
+<script setup>
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import DatePicker from 'primevue/datepicker';
+import RadioButton from 'primevue/radiobutton';
+import { ref } from 'vue';
+
+const visible = ref(true);
+const nameVal = ref(null);
+const passVal = ref(null);
+const passVal2 = ref(null);
+const sex = ref('');
+const selectedCategory = ref('');
+const categories = ref([
+    { name: '연 2000만원 미만', key: 'A' },
+    { name: '연 2000만원 이상 - 연 5000만원 미만', key: 'B' },
+    { name: '연 5000만원 이상 - 연 8000만원 미만', key: 'C' },
+    { name: '연 8000만원 초과', key: 'D' }
+]);
+const emailVal = ref('');
+
+//날짜 최대최소 설정
+let today = new Date();
+let month = today.getMonth();
+let year = today.getFullYear();
+let prevMonth = (month === 0) ? 11 : month -1;
+let prevYear = (prevMonth === 11) ? year - 1 : year;
+let nextMonth = (month === 11) ? 0 : month + 1;
+let nextYear = (nextMonth === 0) ? year + 1 : year;
+
+const date = ref();
+const minDate = ref(new Date());
+const maxDate = ref(new Date());
+
+minDate.value.setMonth(prevMonth);
+minDate.value.setFullYear(prevYear);
+maxDate.value.setMonth(nextMonth);
+maxDate.value.setFullYear(nextYear);
+</script>
+
+<style scoped>
+@import "../assets/css/modal.css";
+</style>

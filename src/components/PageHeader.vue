@@ -27,21 +27,26 @@
             </ul>
         </div>
         <div class="layout-topbar-end">
-            <LoginModal></LoginModal>
             <SignModal></SignModal>
+            <LoginModal></LoginModal>
+            <DetailSign></DetailSign>
         </div>
     </header>
 </template>
 
 <script>
 import LoginModal from "../components/mdLogin.vue";
-import SignModal from "../components/mdSign.vue";
+import SignModal from "../components/mdSignInfo.vue";
+import DetailSign from "../components/mdSignDetail.vue";
+
 
 export default {
     name: "App",
     components: {
         LoginModal,    // 로그인 모달창
-        SignModal      // 회원가입 모달창
+        SignModal,     // 회원가입 모달창
+        DetailSign
+
     },
 };
 

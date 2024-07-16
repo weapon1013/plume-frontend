@@ -1,3 +1,36 @@
-
-
+.p-dialog{
+    width: 50rem !important;
+    height: 40rem;
+    background-color: rgb(219 206 235 / 80%) !important;
+    border:none !important;
+}
+.modal_container{
+    display:flex; 
+    justify-content: center; 
+    width: 45rem !important; 
+    height: 30rem; 
+}
+.modal_left{
+    display:flex; 
+    width: 100%; 
+    height:100%; 
+    flex-direction: column;
+    z-index:100;
+    background-color: #fff;
+    border-radius: 15px;
+}
+.modal_right{
+    display:flex; 
+    width: 100%;
+    height:100%
+}
+.flat-line{
+    flex-shrink: 1; 
+    background-color: var(--surface-700); 
+    height:0.5px; 
+    position:relative; 
+    flex-grow:1; 
+    top: 0.65rem;
+}
+.p-inputtext{width:19rem;}
 
