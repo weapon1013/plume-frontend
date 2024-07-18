@@ -27,50 +27,23 @@
             </ul>
         </div>
         <div class="layout-topbar-end">
-            <SignModal></SignModal>
-            <LoginModal></LoginModal>
-            <DetailSign></DetailSign>
+            <LoginStatic :status='loginStat'></LoginStatic>
         </div>
     </header>
 </template>
 
-<script>
-import LoginModal from "../components/mdLogin.vue";
-import SignModal from "../components/mdSignInfo.vue";
-import DetailSign from "../components/mdSignDetail.vue";
+<script setup>
+import { ref } from 'vue';
+import LoginStatic from "./btn/LoginStaticHeader.vue";
 
-
-export default {
-    name: "App",
-    components: {
-        LoginModal,    // 로그인 모달창
-        SignModal,     // 회원가입 모달창
-        DetailSign
-
-    },
-};
+// loginStat: true(로그인) / false(비로그인)
+const loginCheck = ref(false);
+const loginStat = ref(loginCheck);
 
 </script>
 
 <style scoped>
-
-.list-none{
-    display: flex;
-    align-items: center;
-}
-
-.list-none li{
-    display: flex;
-    padding: .5rem 1rem;
-    align-items: center;
-    overflow: hidden;
-    position:relative;
-}
-
-.list-none li a{
-    text-decoration-line: none;
-    font-weight: 500;
-    color: var(--primary-menu-color);
-}
-
+.list-none{ display: flex; align-items: center; }
+.list-none li{ display: flex; padding: .5rem 1rem; align-items: center; overflow: hidden; position:relative; }
+.list-none li a{ text-decoration-line: none; font-weight: 500; color: var(--primary-menu-color); }
 </style>
