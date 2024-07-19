@@ -9,33 +9,32 @@
             <p>다양한 기능을 경험해보세요.</p>
         </div>
         <div class="flex justify-content-end pb-3">
-                            
+        <!-- Add content here if needed -->
         </div>
         <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-            <Button type="button" label="카카오로그인" @click="visible = false" severity="help" raised></Button>
+            <Button type="button" label="카카오로그인" @click="closeModal" severity="help" raised></Button>
             <div class="flex flex-row">
                 <div class="flat-line"></div>
                 <div>OR</div>
                 <div class="flat-line"></div>
             </div>
-            <Button type="button" label="회원가입" @click="emitArgs" severity="secondary" raised ></Button>
+            <Button type="button" label="회원가입" @click="switchModal" severity="secondary" raised ></Button>
         </div>
-        {{ props }}
     </div>
 </template>
 
 <script setup>
+import { defineEmits } from 'vue';
 import Button from 'primevue/button';
-import { ref, defineProps, defineEmits } from 'vue';
-const visible = ref(false);
 
-const props = defineProps({
-    btnIndex : String
-})
+const emit = defineEmits(['switch-modal', 'close-modal']);
 
-const emit = defineEmits(['emitArgs'])
-const emitArgs = function(){
-    emit('emitArgs', 'joinDetl')
+const closeModal = () => {
+    emit('close-modal')
+}
+
+const switchModal = () => {
+    emit('switch-modal')
 }
 
 </script>

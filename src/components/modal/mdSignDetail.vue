@@ -3,24 +3,29 @@
         <div class="flex justify-content-center my-5">
             <img src="../../assets/img/plume_logo_temp.svg">
         </div>
-        <div class="mx-4">
-            <div class="flex flex-column gap-2">
+        <div class="mx-4" v-show="showSections.section1">
+            <div class="flex flex-column">
                 <label for="username">아이디</label>
                 <InputText id="username" v-model="nameVal" aria-describedby="username-help" />
                 <small id="username-help">Enter your username to reset your password.</small>
             </div>
-            <div class="flex flex-column gap-2">
+            <div class="flex flex-column mt-3">
                 <label for="username">비밀번호</label>
                 <Password v-model="passVal" toggleMask />
             </div>
-            <div class="flex flex-column gap-2">
+            <div class="flex flex-column mt-3">
                 <label for="username">비밀번호</label>
                 <Password v-model="passVal2" toggleMask />
             </div>
-            <div class="flex flex-column gap-2">
+            <div class="flex flex-column mt-3">
                 <label for="username">생년월일</label>
                 <DatePicker v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
             </div>
+            <div class="flex flex-row justify-content-end mt-3">
+                <Button label="다음" @click="goToSection('section2')"/>
+            </div>
+        </div>
+        <div class="mx-4" v-show="showSections.section2">
             <div class="flex flex-column gap-2">
                 <label for="username">성별</label>
                 <div class="flex items-center">
@@ -39,6 +44,12 @@
                     <label :for="category.key" class="ml-2">{{ category.name }}</label>
                 </div>
             </div>
+            <div class="flex flex-row justify-content-between mt-3">
+                <Button label="이전" @click="goToSection('section1')"/>
+                <Button label="다음" @click="goToSection('section3')"/>
+            </div>
+        </div>
+        <div class="mx-4" v-show="showSections.section3">
             <div class="flex flex-column gap-2">
                 <label for="email">이메일</label>
                 <InputText id="email" v-model="emailVal" />
@@ -51,9 +62,12 @@
                 <label>약관동의화면</label>
                 <textarea>아이우에오 여기는 약관동의화면입니다</textarea>
             </div>
-        </div>
-        <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-            <Button type="button" label="회원가입" @click="visible = false" severity="help" raised></Button>
+            <div class="flex flex-row justify-content-start mt-3">
+                <Button label="이전" @click="goToSection('section2')"/>
+            </div>
+            <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
+                <Button type="button" label="회원가입" @click="visible = false" severity="help" raised></Button>
+            </div>
         </div>
     </div>
 </template>
@@ -98,6 +112,25 @@ minDate.value.setMonth(prevMonth);
 minDate.value.setFullYear(prevYear);
 maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
+
+// const showSections = ref({
+//     section1: true,
+//     section2: false,
+//     section3: false,
+// })
+
+// 임시
+const showSections = ref({
+    section1: false,
+    section2: true,
+    section3: false,
+})
+
+const goToSection = (section) => {
+    for(let key in showSections.value) {
+        showSections.value[key] = key === section ? !showSections.value[key] : false ;
+    }
+}
 </script>
 
 <style scoped>

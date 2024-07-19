@@ -29,13 +29,13 @@
             </router-link>
         </div>
         <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-            <Button type="button" label="로그인" @click="visible = false" severity="secondary" raised></Button>
+            <Button type="button" label="로그인" @click="closeModal" severity="secondary" raised></Button>
             <div class="flex flex-row">
                 <div class="flat-line"></div>
                 <div>OR</div>
                 <div class="flat-line"></div>
             </div>
-            <Button type="button" label="카카오로그인" @click="visible = false" severity="help" raised></Button>
+            <Button type="button" label="카카오로그인" @click="closeModal" severity="help" raised></Button>
         </div>
     </div>
 </template>
@@ -44,11 +44,15 @@
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 
-const visible = ref(false);
 const nameVal = ref(null);
 const passVal = ref(null);
+
+const emit = defineEmits(['close-modal']);
+const closeModal = () => {
+    emit('close-modal')
+}
 
 </script>
 
