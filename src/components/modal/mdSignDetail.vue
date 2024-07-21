@@ -4,44 +4,45 @@
             <img src="../../assets/img/plume_logo_temp.svg">
         </div>
         <div class="mx-4" v-show="showSections.section1">
-            <div class="flex flex-column">
-                <label for="username">아이디</label>
-                <InputText id="username" v-model="nameVal" aria-describedby="username-help" />
-                <small id="username-help">Enter your username to reset your password.</small>
-            </div>
-            <div class="flex flex-column mt-3">
-                <label for="username">비밀번호</label>
-                <Password v-model="passVal" toggleMask />
-            </div>
-            <div class="flex flex-column mt-3">
-                <label for="username">비밀번호</label>
-                <Password v-model="passVal2" toggleMask />
-            </div>
-            <div class="flex flex-column mt-3">
-                <label for="username">생년월일</label>
-                <DatePicker v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
+            <div class="h-18rem relative">
+                <div class="flex flex-column">
+                    <InputText id="username" v-model="nameVal" aria-describedby="username-help" placeholder="아이디"/>
+                </div>
+                <div class="flex flex-column mt-3">
+                    <Password v-model="passVal" toggleMask placeholder="비밀번호"/>
+                </div>
+                <div class="flex flex-column mt-3">
+                    <Password v-model="passVal2" toggleMask placeholder="비밀번호확인"/>
+                </div>
+                <div class="flex flex-column mt-3">
+                    <DatePicker placeholder="생년월일" v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
+                </div>
             </div>
             <div class="flex flex-row justify-content-end mt-3">
                 <Button label="다음" @click="goToSection('section2')"/>
             </div>
         </div>
         <div class="mx-4" v-show="showSections.section2">
-            <div class="flex flex-column gap-2">
+            <div class="h-18rem relative">
                 <label for="username">성별</label>
-                <div class="flex items-center">
-                    <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
-                    <label for="sex1" class="ml-2">남성</label>
-                </div>
-                <div class="flex items-center">
-                    <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
-                    <label for="sex2" class="ml-2">여성</label>
+                <div class="flex justify-content-start gap-4 mt-2">
+                    <div class="flex items-center">
+                        <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
+                        <label for="sex1" class="ml-2">남성</label>
+                    </div>
+                    <div class="flex items-center">
+                        <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
+                        <label for="sex2" class="ml-2">여성</label>
+                    </div>
                 </div>
             </div>
-            <div class="flex flex-column gap-2">
+            <div class="mt-3">
                 <label for="username">수입</label>
-                <div v-for="category in categories" :key="category.key" class="flex items-center">
-                    <RadioButton v-model="selectedCategory" :inputId="category.key" name="dynamic" :value="category.name" />
-                    <label :for="category.key" class="ml-2">{{ category.name }}</label>
+                <div class="flex flex-column gap-2 mt-2">
+                    <div v-for="category in categories" :key="category.key" class="flex items-center">
+                        <RadioButton v-model="selectedCategory" :inputId="category.key" name="dynamic" :value="category.name" />
+                        <label :for="category.key" class="ml-2">{{ category.name }}</label>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row justify-content-between mt-3">
@@ -121,8 +122,8 @@ maxDate.value.setFullYear(nextYear);
 
 // 임시
 const showSections = ref({
-    section1: false,
-    section2: true,
+    section1: true,
+    section2: false,
     section3: false,
 })
 
