@@ -2,7 +2,7 @@
     <header class="layout-topbar">
         <div class="layout-topbar-start">
             <router-link to="/">
-                <img src="../assets/img/plume_logo_temp.svg">
+                <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
             </router-link>
             <i class="pi pi-search"></i>
             <input placeholder="검색창">
@@ -35,6 +35,7 @@
 <script setup>
 import { ref } from 'vue';
 import LoginStatic from "./btn/LoginStaticHeader.vue";
+import Plumelogo from "./btn/PlumeLogo.vue";
 
 // loginStat: true(로그인) / false(비로그인)
 const loginCheck = ref(false);

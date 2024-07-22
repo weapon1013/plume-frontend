@@ -1,7 +1,7 @@
 <template>
     <div class="modal_left">
         <div class="flex justify-content-center my-5">
-            <img src="../../assets/img/plume_logo_temp.svg">
+            <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
         </div>
         <div class="mx-4 flex flex-column align-items-center">
             <h2>회원가입</h2>
@@ -26,6 +26,7 @@
 <script setup>
 import { defineEmits } from 'vue';
 import Button from 'primevue/button';
+import Plumelogo from "../btn/PlumeLogo.vue";
 
 const emit = defineEmits(['switch-modal', 'close-modal']);
 

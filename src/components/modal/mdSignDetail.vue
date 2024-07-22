@@ -1,21 +1,45 @@
 <template>
     <div class="modal_left">
         <div class="flex justify-content-center my-5">
-            <img src="../../assets/img/plume_logo_temp.svg">
+            <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
         </div>
         <div class="mx-4" v-show="showSections.section1">
             <div class="h-18rem relative">
                 <div class="flex flex-column">
                     <InputText id="username" v-model="nameVal" aria-describedby="username-help" placeholder="아이디"/>
                 </div>
-                <div class="flex flex-column mt-3">
+                <div class="flex flex-column mt-4">
                     <Password v-model="passVal" toggleMask placeholder="비밀번호"/>
                 </div>
-                <div class="flex flex-column mt-3">
+                <div class="flex flex-column mt-4">
                     <Password v-model="passVal2" toggleMask placeholder="비밀번호확인"/>
                 </div>
-                <div class="flex flex-column mt-3">
+                <div class="flex flex-column mt-4">
                     <DatePicker placeholder="생년월일" v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
+                </div>
+                <!-- <div class="h-18rem relative">
+                    <div class="flex justify-content-start gap-4 mt-2">
+                        <div class="flex items-center">
+                            <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
+                            <label for="sex1" class="ml-2">남성</label>
+                        </div>
+                        <div class="flex items-center">
+                            <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
+                            <label for="sex2" class="ml-2">여성</label>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="flex flex-column mt-2 align-items-center">
+                    <input type="radio" id="man" value="man" v-model="selectedGender" class="hidden"/>
+                    <input type="radio" id="woman" value="woman" v-model="selectedGender" class="hidden"/>
+                    <div class="switch">
+                        <label for="man">남</label>
+                        <!-- <i class="pi pi-mars" :class="{ show: selectedGender === 'man' }"></i> -->
+                        <img src="../../assets/img/man.png" :class="{ show: selectedGender === 'man' }">
+                        <!-- <i class="pi pi-venus" :class="{ show: selectedGender === 'woman' }"></i> -->
+                        <img src="../../assets/img/woman.png" :class="{ show: selectedGender === 'woman' }">
+                        <label for="woman">여</label>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row justify-content-end mt-3">
@@ -23,19 +47,6 @@
             </div>
         </div>
         <div class="mx-4" v-show="showSections.section2">
-            <div class="h-18rem relative">
-                <label for="username">성별</label>
-                <div class="flex justify-content-start gap-4 mt-2">
-                    <div class="flex items-center">
-                        <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
-                        <label for="sex1" class="ml-2">남성</label>
-                    </div>
-                    <div class="flex items-center">
-                        <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
-                        <label for="sex2" class="ml-2">여성</label>
-                    </div>
-                </div>
-            </div>
             <div class="mt-3">
                 <label for="username">수입</label>
                 <div class="flex flex-column gap-2 mt-2">
@@ -79,13 +90,14 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import DatePicker from 'primevue/datepicker';
 import RadioButton from 'primevue/radiobutton';
+import Plumelogo from "../btn/PlumeLogo.vue";
 import { ref } from 'vue';
 
 const visible = ref(false);
 const nameVal = ref(null);
 const passVal = ref(null);
 const passVal2 = ref(null);
-const sex = ref('');
+const selectedGender = ref('man'); // 초기값 설정
 const selectedCategory = ref('');
 const categories = ref([
     { name: '연 2000만원 미만', key: 'A' },
@@ -114,13 +126,6 @@ minDate.value.setFullYear(prevYear);
 maxDate.value.setMonth(nextMonth);
 maxDate.value.setFullYear(nextYear);
 
-// const showSections = ref({
-//     section1: true,
-//     section2: false,
-//     section3: false,
-// })
-
-// 임시
 const showSections = ref({
     section1: true,
     section2: false,
@@ -137,4 +142,42 @@ const goToSection = (section) => {
 <style scoped>
 @import "../../assets/css/modal.css";
 @import 'primeicons/primeicons.css';
+
+.switch{
+    width:100%;
+    height:3rem;
+    text-align: center;
+    background-color: #7469B6;
+    transition : all 0.2s ease ;
+    border-radius : 10px ;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1.2rem;
+}
+.switch label{
+    cursor :pointer;
+    color : #554747a1;
+    width :60px;
+    line-height :50px;
+    transition :all 0.2s ease;
+}
+.switch label:hover{
+    color:black;
+}
+.switch img{
+    color:white;
+    width: 2rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: absolute; /* Position to allow smooth transition */
+}
+
+.switch img.show {
+    opacity: 1;
+}
+#woman:checked ~ .switch { background: #F8B7B3; }
+#man:checked ~ .switch label[for=man]{ color : white;}
+#woman:checked ~ .switch label[for=woman]{ color: white;}
+
 </style>

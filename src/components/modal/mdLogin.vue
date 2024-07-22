@@ -1,7 +1,7 @@
 <template>
     <div class="modal_left">
         <div class="flex justify-content-center my-5">
-            <img src="../../assets/img/plume_logo_temp.svg">
+            <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
         </div>
         <div class="mx-4">
             <div class="flex justify-center mb-4">
@@ -44,6 +44,7 @@
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
+import Plumelogo from "../btn/PlumeLogo.vue";
 import { ref, defineEmits } from 'vue';
 
 const nameVal = ref(null);
