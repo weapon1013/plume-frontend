@@ -17,18 +17,6 @@
                 <div class="flex flex-column mt-4">
                     <DatePicker placeholder="생년월일" v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar/>
                 </div>
-                <!-- <div class="h-18rem relative">
-                    <div class="flex justify-content-start gap-4 mt-2">
-                        <div class="flex items-center">
-                            <RadioButton v-model="sex" inputId="sex1" name="sex" value="man" />
-                            <label for="sex1" class="ml-2">남성</label>
-                        </div>
-                        <div class="flex items-center">
-                            <RadioButton v-model="sex" inputId="sex2" name="sex" value="woman" />
-                            <label for="sex2" class="ml-2">여성</label>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="flex flex-column mt-2 align-items-center">
                     <input type="radio" id="man" value="man" v-model="selectedGender" class="hidden"/>
                     <input type="radio" id="woman" value="woman" v-model="selectedGender" class="hidden"/>
@@ -172,7 +160,6 @@ const goToSection = (section) => {
     transition: opacity 0.8s ease;
     position: absolute; /* Position to allow smooth transition */
 }
-
 .switch img.show {
     opacity: 1;
 }

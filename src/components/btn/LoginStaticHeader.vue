@@ -19,7 +19,11 @@
                     @switch-modal="openModal('joinDetl')"
                     @close-modal = "closeModal"
                 ></mdSignInfo>
-                <mdLogin v-if="btnIndex === 'login'" @close-modal = "closeModal"></mdLogin>
+                <mdLogin 
+                    v-if="btnIndex === 'login'" 
+                    @switch-modal="openModal('joinDetl')"
+                    @close-modal = "closeModal"
+                ></mdLogin>
                 <mdSignDetail v-if="btnIndex === 'joinDetl'"></mdSignDetail>
                 <div class="modal_right">
                     배경배경

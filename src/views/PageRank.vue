@@ -1,7 +1,9 @@
 <template>
     <Sidebar></Sidebar>
-    <div class="flex-shrink-0">
-      <h1>This is an Rank page</h1>
+    <div class="layout-content-wrapper">
+      <div class="col-md-9">
+        <h5>This is an Rank page</h5>
+      </div>
     </div>
 </template>
 

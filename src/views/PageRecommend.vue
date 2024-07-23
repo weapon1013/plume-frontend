@@ -1,7 +1,9 @@
 <template>
     <Sidebar></Sidebar>
-    <div class="recommend">
-      <h1>This is an RECOMMEND page</h1>
+    <div class="layout-content-wrapper">
+      <div class="col-md-9">
+        <h5>This is an Recommend page</h5>
+      </div>
     </div>
 </template>
 

@@ -37,7 +37,7 @@ button {
 
 button.plume-logo {
   font-weight: 600;
-  color: #382b22;
+  color: #080808;
   text-transform: uppercase;
   padding: 0.25em 1em;
   background: #fff0f0;
