@@ -1,5 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 
+const path = require('path');
+
 module.exports = {
   publicPath: '/plume',
   transpileDependencies: true,
@@ -11,7 +13,9 @@ module.exports = {
         __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
       })
       return definitions
-    })
+    });
+    config.resolve.alias
+      .set('@', path.resolve(__dirname, 'src/'));
   },
 
 }

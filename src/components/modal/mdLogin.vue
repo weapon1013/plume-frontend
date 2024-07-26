@@ -24,7 +24,7 @@
             <button @click="switchModal">비밀번호찾기</button>
         </div>
         <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-            <Button type="button" label="로그인" @click="closeModal" severity="secondary" raised></Button>
+            <Button type="button" label="로그인" @click="loginForm" severity="secondary" raised></Button>
             <div class="flex flex-row">
                 <div class="flat-line"></div>
                 <div>OR</div>
@@ -40,9 +40,10 @@
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
-import Plumelogo from "../btn/PlumeLogo.vue";
 import Password from 'primevue/password';
 import { ref, defineEmits } from 'vue';
+import Plumelogo from "@/components/btn/PlumeLogo.vue";
+import axios from 'axios';
 
 const nameVal = ref(null);
 const value = ref(null);
@@ -52,6 +53,17 @@ const closeModal = () => { emit('close-modal') }
 const switchModal = () => {
     emit('switch-modal')
 }
+
+const loginForm = () => {
+    axios
+        .get('http://localhost:3000/plume/', {
+            userId: '1',
+            title:  'Article title',
+            body:   'Article body content'
+        })
+        .then((response) => console.log(response))
+}
+
 </script>
 
 <style>

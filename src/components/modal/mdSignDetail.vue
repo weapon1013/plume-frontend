@@ -78,8 +78,8 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import DatePicker from 'primevue/datepicker';
 import RadioButton from 'primevue/radiobutton';
-import Plumelogo from "../btn/PlumeLogo.vue";
 import { ref } from 'vue';
+import Plumelogo from "@/components/btn/PlumeLogo.vue";
 
 const visible = ref(false);
 const nameVal = ref(null);
