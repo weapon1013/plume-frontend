@@ -36,18 +36,7 @@
             <div class="h-15rem relative">
                 <div class="flex flex-column">
                     <label for="username">수입</label>
-                    <div class="flex flex-column gap-2 mt-2">
-                        <!-- <Slider v-model="categoryVal" class="w-56" /> -->
-                        <!-- <div v-for="category in categories" :key="category.key" class="flex items-center">
-                            <RadioButton v-model="selectedCategory" :inputId="category.key" name="dynamic" :value="category.name" />
-                            <label :for="category.key" class="ml-2">{{ category.name }}</label>
-                        </div> -->
-                        <div class="range-slider grad" style='--min:0; --max:10000; --step:100; --value:200; --text-value:"200"; --prefix:"$"'>
-                            <input type="range" min="0" max="10000" step="100" value="200" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
-                            <output></output>
-                            <div class='range-slider__progress'></div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="flex flex-column mt-4">
                     <InputText id="email" v-model="emailVal" placeholder="이메일"/>
@@ -75,8 +64,6 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import DatePicker from 'primevue/datepicker';
-//import RadioButton from 'primevue/radiobutton';
-// import Slider from 'primevue/slider';
 import { ref } from 'vue';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
@@ -86,7 +73,12 @@ const nameVal = ref(null);
 const passVal = ref(null);
 const passVal2 = ref(null);
 const selectedGender = ref('man'); // 초기값 설정
+const emailVal = ref('');
+const certifyVal = ref('');
+
+
 // const categoryVal = ref(null);
+
 //const selectedCategory = ref('');
 // const categories = ref([
 //     { name: '연 2000만원 미만', key: 'A' },
@@ -94,8 +86,6 @@ const selectedGender = ref('man'); // 초기값 설정
 //     { name: '연 5000만원 이상 - 연 8000만원 미만', key: 'C' },
 //     { name: '연 8000만원 초과', key: 'D' }
 // ]);
-const emailVal = ref('');
-const certifyVal = ref('');
 
 //날짜 최대최소 설정
 let today = new Date();
@@ -167,15 +157,4 @@ const goToSection = (section) => {
 #woman:checked ~ .switch { background: #F8B7B3; }
 #man:checked ~ .switch label[for=man]{ color : white;}
 #woman:checked ~ .switch label[for=woman]{ color: white;}
-.range-slider.grad {
-  --progress-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) inset;
-  --progress-flll-shadow: var(--progress-shadow);
-  --fill-color: linear-gradient(to right, LightCyan, var(--primary-color));
-  --thumb-shadow: 0 0 4px rgba(0, 0, 0, 0.3),
-    -3px 9px 9px rgba(255, 255, 255, 0.33) inset,
-    -1px 3px 2px rgba(255, 255, 255, 0.33) inset,
-    0 0 0 99px var(--primary-color) inset;
-}
-.range-slider.grad input:hover { --thumb-transform: scale(1.2);}
-.range-slider.grad input:active { --thumb-shadow: inherit; --thumb-transform: scale(1); }
 </style>
