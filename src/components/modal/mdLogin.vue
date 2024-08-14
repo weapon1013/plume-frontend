@@ -7,14 +7,14 @@
         <div class="mx-4 -mb-2">
             <div class="flex justify-center mb-4">
                 <FloatLabel>
-                    <InputText id="username" v-model="nameVal" autocomplete="off"/>
-                    <label for="username">Email or Username</label>
+                    <InputText id="p_idVal" v-model="idVal" autocomplete="off"/>
+                    <label for="p_idVal">아이디</label>
                 </FloatLabel>
             </div>
             <div class="flex justify-center mb-3">
                 <FloatLabel>
-                    <Password v-model="value" toggleMask id="password"/>
-                    <label for="password">Password</label>
+                    <Password id="p_passVal" v-model="passVal" toggleMask />
+                    <label for="p_passVal">비밀번호</label>
                 </FloatLabel>
             </div>
         </div>
@@ -24,7 +24,7 @@
             <button @click="switchModal">비밀번호찾기</button>
         </div>
         <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-            <Button type="button" label="로그인" @click="loginForm" severity="secondary" raised></Button>
+            <Button type="button" label="로그인" @click="submit" severity="secondary" raised></Button>
             <div class="flex flex-row">
                 <div class="flat-line"></div>
                 <div>OR</div>
@@ -43,10 +43,11 @@ import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
 import { ref, defineEmits } from 'vue';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
-import axios from 'axios';
+import {axiosSet} from '@/plugins/axios';
 
-const nameVal = ref(null);
-const value = ref(null);
+// default setting
+const idVal      = ref(null);       // 아이디
+const passVal    = ref(null);       // 비밀번호
 
 const emit = defineEmits(['switch-modal', 'close-modal']);
 const closeModal = () => { emit('close-modal') }
@@ -54,16 +55,19 @@ const switchModal = () => {
     emit('switch-modal')
 }
 
-const loginForm = () => {
-    axios
-        .get('http://localhost:3000/plume/', {
-            userId: '1',
-            title:  'Article title',
-            body:   'Article body content'
-        })
-        .then((response) => console.log(response))
-}
-
+const submit = async () => {
+  try {
+    const response = await axiosSet.post("https://jsonplaceholder.typicode.com/posts", {
+        p_idVal: idVal.value,
+        p_passVal: passVal.value
+    });
+    if (response.status == 201) {
+      console.log(response.status, response.data);
+    }
+  } catch (e) {
+    console.log(`${e.name}(${e.code}): ${e.message})`);
+  }
+};
 </script>
 
 <style>

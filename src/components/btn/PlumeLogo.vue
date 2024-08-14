@@ -40,8 +40,8 @@ button.plume-logo {
   color: #080808;
   text-transform: uppercase;
   padding: 0.25em 1em;
-  background: #fff0f0;
-  border: 2px solid #b18597;
+  background: #e7e0ef;
+  border: 2px solid #9f7ba7;
   border-radius: 6px;
   transform-style: preserve-3d;
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
@@ -56,16 +56,18 @@ button.plume-logo::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #f9c4d2;
+  background: #d2acf3;
   border-radius: inherit;
-  box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
+  box-shadow: 0 0 0 2px #9e85b1, 0 0.625em 0 0 #f7e2ff;
   transform: translate3d(0, 0.75em, -1em);
   transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
 }
 
 button.plume-logo:hover {
-  background: #ffe9e9;
+  background: #7751a7;
+  color: #fff;
   transform: translate(0, 0.25em);
+  border: 2px solid #714f79;
 }
 
 button.plume-logo:hover::before {
@@ -74,12 +76,12 @@ button.plume-logo:hover::before {
 }
 
 button.plume-logo:active {
-  background: #ffe9e9;
+  background: #f4e9ff;
   transform: translate(0em, 0.75em);
 }
 
 button.plume-logo:active::before {
-  box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
+  box-shadow: 0 0 0 2px #a485b1, 0 0 #f2e2ff;
   transform: translate3d(0, 0, -1em);
 }
 </style>
