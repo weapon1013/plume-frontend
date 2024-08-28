@@ -10,7 +10,7 @@ const axiosSet = axios.create({
 
 export {axiosSet};
 
-// get방식 예제
+// get방식 예제 :: 조회
 /*
 const get = () => {
     axiosSet({
@@ -32,7 +32,7 @@ const get = () => {
 }
 */
 
-// post방식 예제
+// post방식 예제 :: 저장
 /*
 const post = async () => {
   try {
@@ -50,3 +50,10 @@ const post = async () => {
   }
 };
 */
+
+// put 방식 :: 수정
+
+// delete 방식 :: 삭제
+
+// 
+

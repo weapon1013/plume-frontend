@@ -4,12 +4,14 @@
             <router-link to="/">
                 <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
             </router-link>
-            <div class="search-box flex align-items-center">
-                <InputText placeholder="검색창"/>
-                <button>
+            <div id="search-container" class="flex align-items-center">
+                <InputText type="text" class="search-input" placeholder="검색어를 입력하세요." 
+                            v-bind:class="{ open: isOpen }" @keyup.enter="toggleSearch()" 
+                            v-model="searchInput"
+                />
+                <button class="search-btn" @click="toggleSearch">
                     <i class="pi pi-search" aria-hidden="true"></i>
                 </button>
-                
             </div>
         </div>
         <div class="layout-topbar-mid">
@@ -43,10 +45,26 @@ import LoginStatic from "./btn/LoginStaticHeader.vue";
 import Plumelogo from "./btn/PlumeLogo.vue";
 import InputText from 'primevue/inputtext';
 
-// loginStat: true(로그인) / false(비로그인)
+// @parameter :: loginCheck :: true(로그인) / false(비로그인)
+// @parameter :: loginStat :: true(로그인) / false(비로그인)
+// @parameter :: isOpen :: true(모달O) / false(모달X)
 const loginCheck = ref(false);
 const loginStat = ref(loginCheck);
+const isOpen = ref(false);
+const searchInput = ref('');
 
+const toggleSearch = () => {
+  if(isOpen.value == true){
+    fn_search();
+  } else {
+    isOpen.value = !isOpen.value;
+  }
+}
+
+function fn_search (){
+    // TODO : 검색 get 방식 넣기
+    alert(searchInput.value);
+}
 </script>
 
 <style scoped>
@@ -54,15 +72,10 @@ const loginStat = ref(loginCheck);
 .list-none li{ display: flex; padding: .5rem 1rem; align-items: center; overflow: hidden; position:relative; }
 .list-none li a{ text-decoration-line: none; font-weight: 500; color: var(--primary-menu-color); }
 
-.search-box{ margin-left: 2rem; border-left: 2px solid #747d7d; height: 35px; padding: 0 0 0 2rem;}
-.search-box input{ width:12rem; height:2rem; transition: all 0.8s ease; }
-.search-box input:focus{ border: 1px solid #CBD5E1; }
-.search-box button{ width: 2rem; height: 2rem; left: -20px; position: relative;
-    background-color: #eff2fb; border: 1px solid #CBD5E1; border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-
-
-
+#search-container { display: flex;align-items: center;margin-left: 2rem;height: 35px;}
+.search-input {width: 0;height: 2rem; padding: 0; border: none; transition: width 0.5s ease, padding 0.5s ease; opacity: 0; visibility: hidden;}
+.search-input.open { width: 12rem; padding-left: 1rem; opacity: 1; visibility: visible;}
+.search-btn {width: 2rem; height: 2rem; background-color: #eff2fb; border: 1px solid #CBD5E1; border-radius: 10px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;}
+.search-input.open ~ .search-btn {transform: translateX(0.5rem);}
 </style>

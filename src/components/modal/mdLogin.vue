@@ -74,13 +74,5 @@ const submit = async () => {
 @import "../../assets/css/modal.css";
 @import 'primeicons/primeicons.css';
 .router-link{margin-right: 25px;}
-.router-link button{
-    cursor: pointer;
-    border: 0;
-    background-color: transparent;
-    padding: 0;
-    margin-right:5px;
-    color: #897f7f;
-    font-family: "SUIT-Regular"
-}
+.router-link button{cursor: pointer; border: 0; background-color: transparent; padding: 0; margin-right:5px; color: #897f7f;font-family: "SUIT-Regular"}
 </style>
