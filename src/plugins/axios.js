@@ -6,6 +6,7 @@ const axiosSet = axios.create({
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',
+        'Authorization' : 'Bearer ' // + 로그인 후 AccessToken 값을 쿠키로 저장하고, Bearer 뒤에 쿠키에 저장된 토큰 값을 붙여서 API 요청하면 됨
     },
 });
 
