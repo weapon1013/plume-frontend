@@ -57,10 +57,16 @@ const switchModal = () => {
 
 const submit = async () => {
   try {
+    // 필드명 변경
     const response = await axiosSet.post("/auth/login", {
-        p_idVal: idVal.value,
-        p_passVal: passVal.value
-    });
+        userId: idVal.value,
+        userPw: passVal.value
+    })
+    // default == 200
+    if(response.status == 200) {
+      console.log(response.status, response.data);
+
+    }
     if (response.status == 201) {
       console.log(response.status, response.data);
       
