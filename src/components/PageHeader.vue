@@ -17,18 +17,22 @@
         <div class="layout-topbar-mid">
             <ul class="list-none">
                 <li>
-                    <router-link to="/feed">
+                    <router-link to="/feed" active-class="active-header">
                         <span>Feed</span>
+                        <div ></div>
+                        <!-- <div :class="active-header"></div> -->
                     </router-link>
                 </li>
                 <li>
                     <router-link to="/recm">
                         <span>Recommend</span>
+                        <div class="active-header"></div>
                     </router-link>
                 </li>
                 <li>
                     <router-link to="/rank">
                         <span>Rank</span>
+                        <div class="active-header"></div>
                     </router-link>
                 </li>
             </ul>
@@ -74,8 +78,10 @@ function fn_search (){
 
 #search-container { display: flex;align-items: center;margin-left: 2rem;height: 35px;}
 .search-input {width: 0;height: 2rem; padding: 0; border: none; transition: width 0.5s ease, padding 0.5s ease; opacity: 0; visibility: hidden;}
-.search-input.open { width: 12rem; padding-left: 1rem; opacity: 1; visibility: visible;}
+.search-input.open { width: 12rem; padding-left: 1rem; opacity: 1; visibility: visible; background-color: #eef2fb;}
 .search-btn {width: 2rem; height: 2rem; background-color: #eff2fb; border: 1px solid #CBD5E1; border-radius: 10px;
     cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;}
 .search-input.open ~ .search-btn {transform: translateX(0.5rem);}
+
+.active-header{width: 5px; height: 5px; background-color: crimson; margin:auto; border-radius: 50%;}
 </style>

@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const axiosSet = axios.create({
-    baseURL : process.env.VUE_APP_API_BASE_URL,
+    // baseURL : process.env.VUE_APP_API_BASE_URL,
+    baseURL : 'http://localhost:8080/api/v1',
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json;charset=utf-8',

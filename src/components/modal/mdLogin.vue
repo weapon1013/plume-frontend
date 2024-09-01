@@ -57,12 +57,13 @@ const switchModal = () => {
 
 const submit = async () => {
   try {
-    const response = await axiosSet.post("https://jsonplaceholder.typicode.com/posts", {
+    const response = await axiosSet.post("/auth/login", {
         p_idVal: idVal.value,
         p_passVal: passVal.value
     });
     if (response.status == 201) {
       console.log(response.status, response.data);
+      
     }
   } catch (e) {
     console.log(`${e.name}(${e.code}): ${e.message})`);
