@@ -16,24 +16,23 @@
         </div>
         <div class="layout-topbar-mid">
             <ul class="list-none">
-                <li>
-                    <router-link to="/feed" active-class="active-header">
+                <li :class="{ 'active': isActive('/feed') }">
+                    <router-link to="/feed">
                         <span>Feed</span>
-                        <div ></div>
-                        <!-- <div :class="active-header"></div> -->
                     </router-link>
+                    <div v-if="isActive('/feed')" class="red-dot"></div>
                 </li>
-                <li>
+                <li :class="{ 'active': isActive('/recm') }">
                     <router-link to="/recm">
                         <span>Recommend</span>
-                        <div class="active-header"></div>
                     </router-link>
+                    <div v-if="isActive('/recm')" class="red-dot"></div>
                 </li>
-                <li>
+                <li :class="{ 'active': isActive('/rank') }">
                     <router-link to="/rank">
                         <span>Rank</span>
-                        <div class="active-header"></div>
                     </router-link>
+                    <div v-if="isActive('/rank')" class="red-dot"></div>
                 </li>
             </ul>
         </div>
@@ -44,31 +43,36 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import LoginStatic from "./btn/LoginStaticHeader.vue";
-import Plumelogo from "./btn/PlumeLogo.vue";
+import { ref, watch } from 'vue';
+import LoginStatic from './btn/LoginStaticHeader.vue';
+import Plumelogo from './btn/PlumeLogo.vue';
 import InputText from 'primevue/inputtext';
+import { useRoute } from 'vue-router';
 
-// @parameter :: loginCheck :: true(로그인) / false(비로그인)
-// @parameter :: loginStat :: true(로그인) / false(비로그인)
-// @parameter :: isOpen :: true(모달O) / false(모달X)
+const route = useRoute();
 const loginCheck = ref(false);
-const loginStat = ref(loginCheck);
+const loginStat = ref(loginCheck.value);
 const isOpen = ref(false);
 const searchInput = ref('');
 
+const isActive = (path) => route.path === path;
+
 const toggleSearch = () => {
-  if(isOpen.value == true){
+  if (isOpen.value) {
     fn_search();
   } else {
     isOpen.value = !isOpen.value;
   }
+};
+
+function fn_search() {
+  alert(searchInput.value);
 }
 
-function fn_search (){
-    // TODO : 검색 get 방식 넣기
-    alert(searchInput.value);
-}
+// 로그인 상태 동기화
+watch(loginCheck, (newVal) => {
+  loginStat.value = newVal;
+});
 </script>
 
 <style scoped>
@@ -83,5 +87,5 @@ function fn_search (){
     cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;}
 .search-input.open ~ .search-btn {transform: translateX(0.5rem);}
 
-.active-header{width: 5px; height: 5px; background-color: crimson; margin:auto; border-radius: 50%;}
+.list-none li .red-dot { position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background-color: #db193d8a; border-radius: 50%; }
 </style>

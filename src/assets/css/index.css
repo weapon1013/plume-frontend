@@ -41,7 +41,7 @@ body{
 .layout-topbar .layout-topbar-mid {
     display: flex;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
     justify-content: center;
 }
 

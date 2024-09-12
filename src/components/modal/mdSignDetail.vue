@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="flex flex-column justify-end gap-2 mx-4 mt-4">
-                <Button type="button" label="회원가입" @click="visible = false" severity="help" raised></Button>
+                <Button type="button" label="회원가입" @click="submit" severity="help" raised></Button>
             </div>
             <div class="flex flex-row justify-content-between mt-3">
                 <Button label="이전" @click="goToSection('section1')" class="btn-modal"/>
@@ -65,6 +65,7 @@ import DatePicker from 'primevue/datepicker';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
 import { ref } from 'vue';
+import {axiosSet} from '@/plugins/axios';
 
 // default setting
 const idVal      = ref(null);       // 아이디
@@ -87,16 +88,31 @@ const goToSection = (section) => {
         showSections.value[key] = key === section ? !showSections.value[key] : false ;
     }
 }
+
+const submit = async () => {
+  try {
+    // 필드명 변경
+    const response = await axiosSet.post("/auth/join", {
+        userId: idVal.value,
+        userPw: passVal.value
+    })
+    // default == 200
+    if(response.status == 200) {
+      console.log(response.status, response.data);
+
+    }
+    if (response.status == 201) {
+      console.log(response.status, response.data);
+      
+    }
+  } catch (e) {
+    console.log(`${e.name}(${e.code}): ${e.message})`);
+  }
+};
 </script>
 
 <style scoped>
 @import "../../assets/css/modal.css";
 @import 'primeicons/primeicons.css';
-
-/*버튼 색상*/
-.btn-modal{
-    background: #fff !important;
-    border: 1px solid rgb(223, 204, 204) !important;
-    color: rgb(68, 68, 68) !important;
-}
+.btn-modal{ background: #fff !important; border: 1px solid rgb(223, 204, 204) !important; color: rgb(68, 68, 68) !important;}
 </style>
