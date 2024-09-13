@@ -15,7 +15,7 @@
                     <Password v-model="passVal2" toggleMask placeholder="비밀번호확인"/>
                 </div>
                 <div class="flex flex-column mt-4">
-                    <DatePicker v-model="date" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar placeholder="생년월일"/>
+                    <DatePicker v-model="birthVal" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar placeholder="생년월일"/>
                 </div>
                 <div class="flex flex-column mt-4 align-items-center">
                     <input type="radio" id="man" value="man" v-model="genderVal" class="hidden"/>
@@ -91,11 +91,15 @@ const goToSection = (section) => {
 
 const submit = async () => {
   try {
-    // 필드명 변경
     const response = await axiosSet.post("/auth/join", {
-        userId: idVal.value,
-        userPw: passVal.value
-    })
+          userId: idVal.value               // 아이디
+        , userPw: passVal.value             // 비밀번호
+        , userBirth: passVal.value          // 생년월일
+        , userNickname: passVal.value       // 성별
+        , userEmail: passVal.value          // 수입
+    });
+    
+
     // default == 200
     if(response.status == 200) {
       console.log(response.status, response.data);
