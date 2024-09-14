@@ -55,6 +55,7 @@ const switchModal = () => {
     emit('switch-modal')
 }
 
+// 로그인
 const submit = async () => {
   try {
     // 필드명 변경
@@ -62,16 +63,12 @@ const submit = async () => {
         userId: idVal.value,
         userPw: passVal.value
     })
-    // default == 200
-    if(response.status == 200) {
-      console.log(response.status, response.data);
-
-    }
     if (response.status == 201) {
-      console.log(response.status, response.data);
-      
+        alert('성공!')
+        console.log(response.status, response.data);
     }
   } catch (e) {
+    alert('실패 ㅜㅜ');
     console.log(`${e.name}(${e.code}): ${e.message})`);
   }
 };

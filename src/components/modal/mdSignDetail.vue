@@ -6,7 +6,21 @@
         <div class="mx-4" v-show="showSections.section1">
             <div class="h-19rem relative">
                 <div class="flex flex-column">
-                    <InputText v-model="idVal" placeholder="아이디"/>
+                    <InputGroup>
+                        <InputText 
+                            v-model="idVal" 
+                            placeholder="아이디" 
+                            :class="{'btn-input': !inputDisabled}"
+                            :disabled="inputDisabled"             
+                            class="btn-input"/>
+                            
+                        <Button
+                            v-if="!isButtonHidden"
+                            label="중복체크"
+                            @click="idCheck"
+                            />
+                    </InputGroup>
+                    <small id="username-help">Enter your username to reset your password.</small>
                 </div>
                 <div class="flex flex-column mt-4">
                     <Password v-model="passVal" toggleMask placeholder="비밀번호"/>
@@ -15,7 +29,8 @@
                     <Password v-model="passVal2" toggleMask placeholder="비밀번호확인"/>
                 </div>
                 <div class="flex flex-column mt-4">
-                    <DatePicker v-model="birthVal" dateFormat="yy-m-d" showIcon :minDate="minDate" :maxDate="maxDate" :manualInput="false" showButtonBar placeholder="생년월일"/>
+                    <DatePicker v-model="birthVal" dateFormat="yy-m-d" showIcon
+                        :manualInput="false" showButtonBar placeholder="생년월일"/>
                 </div>
                 <div class="flex flex-column mt-4 align-items-center">
                     <input type="radio" id="man" value="man" v-model="genderVal" class="hidden"/>
@@ -64,6 +79,7 @@ import Password from 'primevue/password';
 import DatePicker from 'primevue/datepicker';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
+import InputGroup from 'primevue/inputgroup';
 import { ref } from 'vue';
 import {axiosSet} from '@/plugins/axios';
 
@@ -71,10 +87,13 @@ import {axiosSet} from '@/plugins/axios';
 const idVal      = ref(null);       // 아이디
 const passVal    = ref(null);       // 비밀번호
 const passVal2   = ref(null);       // 비밀번호 확인
+const birthVal   = ref(null);       // 비밀번호 확인
 const genderVal  = ref('man');      // 성별 - 초기값(남)
 const incomeVal  = ref(null);       // 수입 (연2000 미만 / 연2000 - 연5000 / 연5000 - 연8000 / 연8000 초과)
 const emailVal   = ref(null);       // 이메일
 const certifyVal = ref(null);       // 인증번호
+const inputDisabled = ref(false);     // input의 disabled 상태
+const isButtonHidden = ref(false);    // 아이디 중복버튼의 표시 여부
 
 // section setting
 const showSections = ref({
@@ -89,28 +108,40 @@ const goToSection = (section) => {
     }
 }
 
+// 아이디 중복체크
+const idCheck = async() => {
+    try{
+        const response = await axiosSet.post("auth/id/check", {
+          userId: idVal.value               // 아이디
+    });
+    if(response.status == 200) {
+        isButtonHidden.value = true;     // 버튼 숨기기
+        inputDisabled.value = true;      // input 비활성화
+    }
+    }catch (e) {
+        console.log(`${e.name}(${e.code}): ${e.message})`);
+  }
+}
+
+// 회원가입
 const submit = async () => {
   try {
-    const response = await axiosSet.post("/auth/join", {
+    const response = await axiosSet.post("/auth/sign", {
           userId: idVal.value               // 아이디
         , userPw: passVal.value             // 비밀번호
-        , userBirth: passVal.value          // 생년월일
-        , userNickname: passVal.value       // 성별
-        , userEmail: passVal.value          // 수입
+        , userBirth: birthVal.value         // 생년월일
+        , userGender: genderVal.value       // 성별
+        , incomeSeq: incomeVal.value        // 수입
+        , userEmail: emailVal.value         // 이메일
     });
-    
 
-    // default == 200
-    if(response.status == 200) {
-      console.log(response.status, response.data);
-
-    }
-    if (response.status == 201) {
-      console.log(response.status, response.data);
-      
+    if (response.status == 200) {
+        alert('성공!')
+        console.log(response.status, response.data);
     }
   } catch (e) {
-    console.log(`${e.name}(${e.code}): ${e.message})`);
+        alert('실패 ㅜㅜ');
+        console.log(`${e.name}(${e.code}): ${e.message})`);
   }
 };
 </script>

@@ -75,3 +75,7 @@ input[type="password"]{
 #woman:checked ~ .switch { background: #F8B7B3; }
 #man:checked ~ .switch label[for=man]{ color : white;}
 #woman:checked ~ .switch label[for=woman]{ color: white;}
+
+.btn-input{
+    width: 17rem;
+}
