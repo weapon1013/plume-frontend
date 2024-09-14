@@ -10,12 +10,11 @@
                         <InputText 
                             v-model="idVal" 
                             placeholder="아이디" 
-                            :class="{'btn-input': !inputDisabled}"
-                            :disabled="inputDisabled"             
+                            :class="{'btn-input': !disalbedId}"
+                            :disabled="disalbedId"             
                             class="btn-input"/>
-                            
                         <Button
-                            v-if="!isButtonHidden"
+                            v-if="!isIdBtnHid"
                             label="중복체크"
                             @click="idCheck"
                             />
@@ -53,7 +52,20 @@
                     <InputText v-model="incomeVal" placeholder="수입"/>
                 </div>
                 <div class="flex flex-column mt-4">
-                    <InputText v-model="emailVal" placeholder="이메일"/>
+                    <InputGroup>
+                        <InputText 
+                            v-model="emailVal" 
+                            placeholder="이메일"
+                            :class="{'btn-input': !disalbedEmail}"
+                            :disabled="disalbedEmail"
+                            class="btn-input"/>    
+                        <Button
+                            v-if="!isEmailBtnHid"
+                            label="전송"
+                            @click="Emailsend"
+                        />
+                    </InputGroup>
+                    
                 </div>
                 <div class="flex flex-column mt-4">
                     <InputText v-model="certifyVal" placeholder="인증번호"/>
@@ -80,8 +92,10 @@ import DatePicker from 'primevue/datepicker';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
 import InputGroup from 'primevue/inputgroup';
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import {axiosSet} from '@/plugins/axios';
+
+const emit = defineEmits(['submit-success']);
 
 // default setting
 const idVal      = ref(null);       // 아이디
@@ -92,8 +106,10 @@ const genderVal  = ref('man');      // 성별 - 초기값(남)
 const incomeVal  = ref(null);       // 수입 (연2000 미만 / 연2000 - 연5000 / 연5000 - 연8000 / 연8000 초과)
 const emailVal   = ref(null);       // 이메일
 const certifyVal = ref(null);       // 인증번호
-const inputDisabled = ref(false);     // input의 disabled 상태
-const isButtonHidden = ref(false);    // 아이디 중복버튼의 표시 여부
+const disalbedId = ref(false);      // 아이디의 disabled 상태
+const isIdBtnHid = ref(false);      // 아이디 중복버튼의 표시 여부
+const disalbedEmail = ref(false);   // 이메일의 disabled 상태
+const isEmailBtnHid = ref(false);   // 이메일의 중복버튼의 표시 여부
 
 // section setting
 const showSections = ref({
@@ -111,12 +127,28 @@ const goToSection = (section) => {
 // 아이디 중복체크
 const idCheck = async() => {
     try{
-        const response = await axiosSet.post("auth/id/check", {
-          userId: idVal.value               // 아이디
+        const response = await axiosSet.post("auth/check", {
+          checkStr: idVal.value               // 아이디
+        , type : 'id'
     });
     if(response.status == 200) {
-        isButtonHidden.value = true;     // 버튼 숨기기
-        inputDisabled.value = true;      // input 비활성화
+        isIdBtnHid.value = true;     // 버튼 숨기기
+        disalbedId.value = true;      // input 비활성화
+    }
+    }catch (e) {
+        console.log(`${e.name}(${e.code}): ${e.message})`);
+  }
+}
+
+// 이메일 전송
+const Emailsend = async() => {
+    try{
+        const response = await axiosSet.post("auth/email", {
+          userEmail: emailVal.value      // 이메일
+    });
+    if(response.status == 200) {
+        isEmailBtnHid.value = true;     // 버튼 숨기기
+        disalbedEmail.value = true;     // input 비활성화
     }
     }catch (e) {
         console.log(`${e.name}(${e.code}): ${e.message})`);
@@ -138,6 +170,7 @@ const submit = async () => {
     if (response.status == 200) {
         alert('성공!')
         console.log(response.status, response.data);
+        emit('submit-success');
     }
   } catch (e) {
         alert('실패 ㅜㅜ');
