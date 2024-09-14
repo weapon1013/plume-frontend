@@ -125,34 +125,43 @@ const goToSection = (section) => {
 }
 
 // 아이디 중복체크
-const idCheck = async() => {
-    try{
-        const response = await axiosSet.post("auth/check", {
-          checkStr: idVal.value               // 아이디
-        , type : 'id'
-    });
-    if(response.status == 200) {
-        isIdBtnHid.value = true;     // 버튼 숨기기
-        disalbedId.value = true;      // input 비활성화
-    }
-    }catch (e) {
+const idCheck = () => {
+    axiosSet({
+        url: "auth/check" ,
+        data : {
+            checkStr: idVal.value   // 아이디
+          , type : 'id'             // 체크값(아이디중복:id / 닉네임중복:nick)
+        }
+    })
+    .then((response) => {
+        if(response.status == 200){
+            isIdBtnHid.value = true;     // 버튼 숨기기
+            disalbedId.value = true;      // input 비활성화
+        }
+    })
+    .catch((e) => {
         console.log(`${e.name}(${e.code}): ${e.message})`);
-  }
+    })
 }
 
+
 // 이메일 전송
-const Emailsend = async() => {
-    try{
-        const response = await axiosSet.post("auth/email", {
-          userEmail: emailVal.value      // 이메일
-    });
-    if(response.status == 200) {
-        isEmailBtnHid.value = true;     // 버튼 숨기기
-        disalbedEmail.value = true;     // input 비활성화
-    }
-    }catch (e) {
+const Emailsend = () => {
+    axiosSet({
+        url: "auth/email" ,
+        data : {
+            userEmail: emailVal.value      // 이메일
+        }
+    })
+    .then((response) => {
+        if(response.status == 200){
+            isEmailBtnHid.value = true;     // 버튼 숨기기
+            disalbedEmail.value = true;     // input 비활성화
+        }
+    })
+    .catch((e) => {
         console.log(`${e.name}(${e.code}): ${e.message})`);
-  }
+    })
 }
 
 // 회원가입
