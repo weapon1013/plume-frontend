@@ -43,7 +43,7 @@ import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
 import { ref, defineEmits } from 'vue';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
-import {axiosSet} from '@/plugins/axios';
+import {axiosPost} from '@/plugins/axios';
 
 // default setting
 const idVal      = ref(null);       // 아이디
@@ -56,21 +56,23 @@ const switchModal = () => {
 }
 
 // 로그인
-const submit = async () => {
-  try {
-    // 필드명 변경
-    const response = await axiosSet.post("/auth/login", {
+const submit = () => {
+    const data = {
         userId: idVal.value,
         userPw: passVal.value
-    })
-    if (response.status == 201) {
-        alert('성공!')
-        console.log(response.status, response.data);
-    }
-  } catch (e) {
-    alert('실패 ㅜㅜ');
-    console.log(`${e.name}(${e.code}): ${e.message})`);
-  }
+    };
+
+    axiosPost("/auth/login", data)
+        .then((response) => {
+            if(response.status === 200){
+                alert('성공!')
+                console.log(response.status, response.data);
+            }
+        })
+        .catch((e) => {
+            alert('실패 ㅜㅜ');
+            console.log(`${e.name}(${e.code}): ${e.message})`);
+        });
 };
 </script>
 

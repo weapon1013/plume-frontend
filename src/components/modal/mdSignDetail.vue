@@ -93,7 +93,7 @@ import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
 import InputGroup from 'primevue/inputgroup';
 import { ref, defineEmits } from 'vue';
-import {axiosSet} from '@/plugins/axios';
+import {axiosGet, axiosPost} from '@/plugins/axios';
 
 const emit = defineEmits(['submit-success']);
 
@@ -126,65 +126,73 @@ const goToSection = (section) => {
 
 // 아이디 중복체크
 const idCheck = () => {
-    axiosSet({
-        url: "auth/check" ,
-        data : {
-            checkStr: idVal.value   // 아이디
-          , type : 'id'             // 체크값(아이디중복:id / 닉네임중복:nick)
-        }
-    })
+  const data = {
+    checkStr: idVal.value,  // 아이디 값
+    type: 'id'              // 체크 타입 (id or nick)
+  };
+  
+  axiosGet("auth/check", data)
     .then((response) => {
-        if(response.status == 200){
-            isIdBtnHid.value = true;     // 버튼 숨기기
-            disalbedId.value = true;      // input 비활성화
+      var idExists = response.data.data.check;
+      if (response.status === 200) {
+        if(!idExists){
+            alert('성공');
+            isIdBtnHid.value = true;   // 버튼 숨기기
+            disalbedId.value = true;   // input 비활성화
+        } else {
+            alert('이미 사용중인 아이디입니다.');
         }
+      }
     })
     .catch((e) => {
+        alert('실패')
         console.log(`${e.name}(${e.code}): ${e.message})`);
-    })
-}
-
+    });
+};
 
 // 이메일 전송
 const Emailsend = () => {
-    axiosSet({
-        url: "auth/email" ,
-        data : {
-            userEmail: emailVal.value      // 이메일
-        }
-    })
+    const data = {
+        userEmail: emailVal.value      // 이메일
+    };
+    axiosGet("auth/email", data)
     .then((response) => {
+        console.log(response);
         if(response.status == 200){
+            alert('성공');
             isEmailBtnHid.value = true;     // 버튼 숨기기
             disalbedEmail.value = true;     // input 비활성화
         }
     })
     .catch((e) => {
+        alert('실패');
         console.log(`${e.name}(${e.code}): ${e.message})`);
     })
 }
 
 // 회원가입
-const submit = async () => {
-  try {
-    const response = await axiosSet.post("/auth/sign", {
+const submit = () => {
+    const data = {
           userId: idVal.value               // 아이디
         , userPw: passVal.value             // 비밀번호
         , userBirth: birthVal.value         // 생년월일
         , userGender: genderVal.value       // 성별
         , incomeSeq: incomeVal.value        // 수입
         , userEmail: emailVal.value         // 이메일
-    });
-
-    if (response.status == 200) {
-        alert('성공!')
-        console.log(response.status, response.data);
-        emit('submit-success');
     }
-  } catch (e) {
-        alert('실패 ㅜㅜ');
-        console.log(`${e.name}(${e.code}): ${e.message})`);
-  }
+
+    axiosPost("/auth/sign", data)
+    .then((response) => {
+        if (response.status == 200) {
+            alert('성공!')
+            console.log(response.status, response.data);
+            emit('submit-success');
+        }
+    })
+    .catch((e) => {
+            alert('실패 ㅜㅜ');
+            console.log(`${e.name}(${e.code}): ${e.message})`);
+    });
 };
 </script>
 
