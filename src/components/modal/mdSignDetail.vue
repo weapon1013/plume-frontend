@@ -16,22 +16,23 @@
                         <Button
                             v-if="!isIdBtnHid"
                             label="중복체크"
-                            @click="idCheck"
-                            />
+                            @click="idCheck" />
                     </InputGroup>
-                    <small id="username-help">Enter your username to reset your password.</small>
+                    <small class="ml-2" id="id-help">{{ idHelpText }}</small>
                 </div>
-                <div class="flex flex-column mt-4">
-                    <Password v-model="passVal" toggleMask placeholder="비밀번호"/>
+                <div class="flex flex-column mt-3">
+                    <Password v-model="passVal" toggleMask placeholder="비밀번호" :maxlength="16" :feedback="false"/>
+                    <small class="ml-2" id="pw-help">{{ pwHelpText }}</small>
                 </div>
-                <div class="flex flex-column mt-4">
-                    <Password v-model="passVal2" toggleMask placeholder="비밀번호확인"/>
+                <div class="flex flex-column mt-3">
+                    <Password v-model="passVal2" toggleMask placeholder="비밀번호확인" :maxlength="16" :feedback="false"/>
+                    <small class="ml-2" id="pw-help2">{{ pwHelpText2 }}</small>
                 </div>
-                <div class="flex flex-column mt-4">
+                <div class="flex flex-column mt-3">
                     <DatePicker v-model="birthVal" dateFormat="yy-m-d" showIcon
                         :manualInput="false" showButtonBar placeholder="생년월일"/>
                 </div>
-                <div class="flex flex-column mt-4 align-items-center">
+                <div class="flex flex-column mt-3 align-items-center">
                     <input type="radio" id="man" value="man" v-model="genderVal" class="hidden"/>
                     <input type="radio" id="woman" value="woman" v-model="genderVal" class="hidden"/>
                     <div class="switch">
@@ -92,8 +93,9 @@ import DatePicker from 'primevue/datepicker';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
 import InputGroup from 'primevue/inputgroup';
-import { ref, defineEmits } from 'vue';
-import {axiosGet, axiosPost} from '@/plugins/axios';
+import { ref, defineEmits, watch } from 'vue';
+import { axiosGet, axiosPost} from '@/plugins/axios';
+import { filterValue } from '@/assets/js/common.js';
 
 const emit = defineEmits(['submit-success']);
 
@@ -110,6 +112,10 @@ const disalbedId = ref(false);      // 아이디의 disabled 상태
 const isIdBtnHid = ref(false);      // 아이디 중복버튼의 표시 여부
 const disalbedEmail = ref(false);   // 이메일의 disabled 상태
 const isEmailBtnHid = ref(false);   // 이메일의 중복버튼의 표시 여부
+
+const idHelpText = ref('영문(소문자), 숫자 조합 (4-10자)');
+const pwHelpText = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
+const pwHelpText2 = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
 
 // section setting
 const showSections = ref({
@@ -194,6 +200,15 @@ const submit = () => {
             console.log(`${e.name}(${e.code}): ${e.message})`);
     });
 };
+
+//아이디
+watch(idVal, (newValue) => {
+    if(filterValue(newValue, 1)){
+        console.log('확인')
+    } else {
+        console.log('확인X')
+    }
+});
 </script>
 
 <style scoped>

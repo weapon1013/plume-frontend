@@ -35,7 +35,7 @@
     top: 0.65rem;
 }
 .p-inputtext{
-    width:19rem;
+    width:100%;
 }
 input[type="password"]{
     font-family:'Pretendard-Regular';
