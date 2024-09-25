@@ -6,7 +6,7 @@ export function filterValue(chkValue, type){
     var formatRegex = '';
     switch(type){
         case 1 :
-            formatRegex = /^[a-z0-9]{4,10}$/;
+            formatRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,10}$/;
             break;
         case 2:
             formatRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;

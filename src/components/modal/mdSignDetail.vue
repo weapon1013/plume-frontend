@@ -18,7 +18,7 @@
                             label="중복체크"
                             @click="idCheck" />
                     </InputGroup>
-                    <small class="ml-2" id="id-help">{{ idHelpText }}</small>
+                    <small class="ml-2 text-red-500" id="id-help">{{ idHelpText }}</small>
                 </div>
                 <div class="flex flex-column mt-3">
                     <Password v-model="passVal" toggleMask placeholder="비밀번호" :maxlength="16" :feedback="false"/>
@@ -115,7 +115,7 @@ const isEmailBtnHid = ref(false);   // 이메일의 중복버튼의 표시 여�
 
 const idHelpText = ref('영문(소문자), 숫자 조합 (4-10자)');
 const pwHelpText = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
-const pwHelpText2 = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
+const pwHelpText2 = ref('');
 
 // section setting
 const showSections = ref({
@@ -204,9 +204,18 @@ const submit = () => {
 //아이디
 watch(idVal, (newValue) => {
     if(filterValue(newValue, 1)){
-        console.log('확인')
+        idHelpText.value = '';
     } else {
-        console.log('확인X')
+        idHelpText.value = '영문(소문자), 숫자 조합 (4-10자)';
+    }
+});
+
+//비밀번호
+watch(passVal, (newValue) => {
+    if(filterValue(newValue, 2)){
+        pwHelpText.value = '';
+    } else {
+        pwHelpText.value = '영문(대소문자),숫자,특수문자 조합 (8-16자)';
     }
 });
 </script>
@@ -214,5 +223,6 @@ watch(idVal, (newValue) => {
 <style scoped>
 @import "../../assets/css/modal.css";
 @import 'primeicons/primeicons.css';
+
 .btn-modal{ background: #fff !important; border: 1px solid rgb(223, 204, 204) !important; color: rgb(68, 68, 68) !important;}
 </style>
