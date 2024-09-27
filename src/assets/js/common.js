@@ -1,6 +1,4 @@
-// chkValue :: 새롭게 넣은 값
-// helpTerm :: 바꿔야하는 help 
-// id :: 유효성 해야하는 값 (1:아이디 유효성, 2:비밀번호유효성)
+// 형식 검사 (아이디, 비밀번호, 이메일)
 export function filterValue(chkValue, type){
     // 추가적인 로직을 여기에 작성
     var formatRegex = '';
@@ -10,7 +8,42 @@ export function filterValue(chkValue, type){
             break;
         case 2:
             formatRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
+            break;
+        case 3:
+            formatRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+            break;
     }
 
     return formatRegex.test(chkValue);
+}
+
+// 유효성 검사
+export const validateValue = (obj) =>{
+    const keyMap = {
+          userId: '아이디'
+        , userPw: '비밀번호'
+        , userBirth: '생년월일'
+        , userGender: '성별'
+        , incomeSeq: '수입'
+        , userEmail: '이메일'
+        , idCheck: '아이디 중복체크'
+        , emailCheck: '이메일 중복체크'
+        , pwCheck: '비밀번호 확인'
+    };
+
+    for(const key in obj){
+        if(isEmpty(obj[key]) || !obj[key]){
+            alert(keyMap[key] + '입력해주세요.')
+            return false;
+        }
+    }
+    return true;
+}
+
+//문자열 빈 문자열인지 체크하여 true/false리턴
+function isEmpty(str){
+    if(typeof str === "undefined" || str === null || str === "")
+        return true;
+    else
+        return false ;
 }
