@@ -60,9 +60,9 @@ const submit = () => {
         userPw: passVal.value
     };
 
-    axiosPost("/auth/login", data)
-    
+    axiosPost("auth/login", data)
         .then((response) => {
+            console.log(response);
             if(response.status === 200){
                 alert('성공!')
                 console.log(response.status, response.data);

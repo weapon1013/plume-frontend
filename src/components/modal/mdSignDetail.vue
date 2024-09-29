@@ -53,7 +53,9 @@
                     <small class="ml-2 text-red-500" id="email-help">{{ emailHelpText }}</small>
                 </div>
                 <div class="flex flex-column mt-4">
-                    <InputText v-model="certifyVal" placeholder="인증번호"/>
+                    <div>인증번호</div>
+                    <InputOtp v-model="certifyVal" integerOnly :length="6"/>
+                    <Button label="인증번호 확인" @click="OtpCheck" />
                 </div>
                 <div class="flex flex-column mt-4">
                     <Textarea>아이우에오 여기는 약관동의화면입니다</Textarea>
@@ -77,6 +79,7 @@ import DatePicker from 'primevue/datepicker';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import Textarea from 'primevue/textarea';
 import InputGroup from 'primevue/inputgroup';
+import InputOtp from 'primevue/inputotp';
 import { ref, defineEmits, watch, computed } from 'vue';
 import { axiosGet, axiosPost} from '@/plugins/axios';
 import { filterValue, validateValue } from '@/assets/js/common.js';
@@ -160,14 +163,32 @@ const Emailsend = () => {
     const data = {
         userEmail: emailVal.value      // 이메일
     };
+    axiosPost("auth/email", data)
+    .then((response) => {
+        console.log(response);
+    if(response.status == 200){
+        alert('성공');
+        isEmailBtnHid.value = true;     // 버튼 숨기기
+        disalbedEmail.value = true;     // input 비활성화
+    }
+    })
+    .catch((e) => {
+        alert('실패');
+        console.log(`${e.name}(${e.code}): ${e.message})`);
+    })
+}
+
+// 인증번호 확인
+const OtpCheck = () => {
+    const data = {
+        code: certifyVal.value      // 이메일
+    };
     axiosGet("auth/email", data)
     .then((response) => {
         console.log(response);
-        if(response.status == 200){
-            alert('성공');
-            isEmailBtnHid.value = true;     // 버튼 숨기기
-            disalbedEmail.value = true;     // input 비활성화
-        }
+    if(response.status == 200){
+        alert('성공');
+    }
     })
     .catch((e) => {
         alert('실패');
@@ -198,7 +219,7 @@ const submit = () => {
     }
 
     if(validateValue(data)){
-        axiosPost("/auth/sign", data)
+        axiosPost("auth/sign", data)
         .then((response) => {
             if (response.status == 200) {
                 alert('성공!')
