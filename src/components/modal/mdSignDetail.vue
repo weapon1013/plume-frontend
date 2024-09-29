@@ -100,8 +100,8 @@ const disalbedPw = ref(false);      // 비밀번호 확인 상태
 
 const idHelpText = ref('영문(소문자), 숫자 조합 (4-10자)');
 const pwHelpText = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
-const pwHelpText2 = ref('');
-const emailHelpText = ref('');
+const pwHelpText2 = ref(' ');
+const emailHelpText = ref(' ');
 
 // section setting
 const showSections = ref({
@@ -184,10 +184,19 @@ const submit = () => {
         , userGender:   genderVal.value             // 성별
         , incomeSeq:    incomeVal.value             // 수입
         , userEmail:    emailVal.value              // 이메일
-        , idCheck:      disalbedId.value            // 아이디 중복체크 확인
-        , emailCheck:   disalbedEmail.value         // 이메일 중복체크 확인
-        , pwCheck:      disalbedPw.value            // 비밀번호 확인
     }
+
+    if(!disalbedId.value){
+        alert('아이디 중복체크를 해주세요')
+        return false;
+    } else if(!disalbedEmail.value){
+        alert('이메일 중복체크를 해주세요')
+        return false;
+    } else if(!disalbedPw.value){
+        alert('비밀번호를 확인해주세요')
+        return false;
+    }
+
     if(validateValue(data)){
         axiosPost("/auth/sign", data)
         .then((response) => {
@@ -218,7 +227,7 @@ watch(passVal, (newValue) => {
     if(!filterValue(newValue, 2)){
         pwHelpText.value = '영문(대소문자),숫자,특수문자 조합 (8-16자)';
     } else {
-        pwHelpText.value = '';
+        pwHelpText.value = ' ';
     }
 });
 
@@ -229,7 +238,7 @@ watch([passVal,passVal2], ([newPassVal,newPassVal2]) => {
             pwHelpText2.value = '비밀번호와 일치X';
             disalbedPw.value = false;
         } else {
-            pwHelpText2.value = '';
+            pwHelpText2.value = ' ';
             disalbedPw.value = true;
         }
     }
@@ -240,7 +249,7 @@ watch(emailVal, (newValue) => {
     if(!filterValue(newValue, 3)){
         emailHelpText.value = '이메일 형식 확인';
     } else {
-        emailHelpText.value = '';
+        emailHelpText.value = ' ';
     }
 });
 </script>

@@ -1,5 +1,4 @@
 <template>
-    <form>
     <div class="modal_left">
         <div class="flex justify-content-center my-5">
             <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
@@ -33,7 +32,6 @@
             <Button type="button" label="카카오로그인" @click="closeModal" severity="help" raised></Button>
         </div>
     </div>
-    </form>
 </template>
 
 <script setup>
@@ -63,6 +61,7 @@ const submit = () => {
     };
 
     axiosPost("/auth/login", data)
+    
         .then((response) => {
             if(response.status === 200){
                 alert('성공!')

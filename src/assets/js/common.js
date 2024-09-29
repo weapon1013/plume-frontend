@@ -26,13 +26,10 @@ export const validateValue = (obj) =>{
         , userGender: '성별'
         , incomeSeq: '수입'
         , userEmail: '이메일'
-        , idCheck: '아이디 중복체크'
-        , emailCheck: '이메일 중복체크'
-        , pwCheck: '비밀번호 확인'
     };
 
     for(const key in obj){
-        if(isEmpty(obj[key]) || !obj[key]){
+        if(isEmpty(obj[key])){
             alert(keyMap[key] + '입력해주세요.')
             return false;
         }
