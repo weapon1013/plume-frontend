@@ -1,19 +1,19 @@
 <template>
     <div class="modal_left">
         <div class="flex justify-content-center my-5">
-            <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
+            <Plumelogo class="mb-3"></Plumelogo>
         </div>
         <div class="mx-4 -mb-2">
             <div class="flex justify-center mb-4">
                 <FloatLabel>
-                    <InputText id="p_idVal" v-model="idVal" autocomplete="off"/>
-                    <label for="p_idVal">아이디</label>
+                    <InputText id="p_userId" v-model="userId" autocomplete="off"/>
+                    <label for="p_userId">아이디</label>
                 </FloatLabel>
             </div>
             <div class="flex justify-center mb-3">
                 <FloatLabel>
-                    <Password id="p_passVal" v-model="passVal" toggleMask />
-                    <label for="p_passVal">비밀번호</label>
+                    <Password id="p_userPw" v-model="userPw" toggleMask :feedback="false"/>
+                    <label for="p_userPw">비밀번호</label>
                 </FloatLabel>
             </div>
         </div>
@@ -30,6 +30,7 @@
                 <div class="flat-line"></div>
             </div>
             <Button type="button" label="카카오로그인" @click="closeModal" severity="help" raised></Button>
+            <Button type="button" label="test" @click="test" severity="secondary" raised></Button>
         </div>
     </div>
 </template>
@@ -44,35 +45,40 @@ import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import {axiosPost} from '@/plugins/axios';
 
 // default setting
-const idVal      = ref(null);       // 아이디
-const passVal    = ref(null);       // 비밀번호
+const userId     = ref(null);       // 아이디
+const userPw    = ref(null);       // 비밀번호
 
-const emit = defineEmits(['switch-modal', 'close-modal']);
-const closeModal = () => { emit('close-modal') }
-const switchModal = () => {
-    emit('switch-modal')
-}
+const emit = defineEmits(['switch-modal', 'close-modal', 'login-success']);
+const closeModal = () => { emit('close-modal') };
+const switchModal = () => { emit('switch-modal') };
 
 // 로그인
 const submit = () => {
     const data = {
-        userId: idVal.value,
-        userPw: passVal.value
+        userId: userId.value,
+        userPw: userPw.value
     };
 
-    axiosPost("auth/login", data)
-        .then((response) => {
-            console.log(response);
-            if(response.status === 200){
-                alert('성공!')
-                console.log(response.status, response.data);
-            }
-        })
-        .catch((e) => {
-            alert('실패 ㅜㅜ');
-            console.log(`${e.name}(${e.code}): ${e.message})`);
-        });
+axiosPost("auth/login", data)
+    .then((response) => {
+        if(response.status === 200){
+            alert('성공!')
+            localStorage.setItem('savedUserId', userId.value);
+            emit('login-success');
+            console.log(response.status, response.data);
+        }
+    })
+    .catch((e) => {
+        alert('실패 ㅜㅜ');
+        console.log(`${e.name}(${e.code}): ${e.message})`);
+    });
 };
+
+const test = () => {
+    console.log(localStorage.getItem('savedUserId'));
+    localStorage.setItem('savedUserId', userId.value);
+    emit('login-success');
+}
 </script>
 
 <style>
@@ -80,4 +86,5 @@ const submit = () => {
 @import 'primeicons/primeicons.css';
 .router-link{margin-right: 25px;}
 .router-link button{cursor: pointer; border: 0; background-color: transparent; padding: 0; margin-right:5px; color: #897f7f;font-family: "SUIT-Regular"}
+.p-inputtext{ width:19rem; }
 </style>

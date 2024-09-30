@@ -2,8 +2,6 @@ body{
     margin: 0px;
     background-size:cover;
     background-image: url('../img/back_img.jpg');
-    /* background-image: url('../img/back_img2.jpg'); */
-    /* background-image: url('../img/back_img3.jpg'); */
 }
 
 .layout-wrapper{

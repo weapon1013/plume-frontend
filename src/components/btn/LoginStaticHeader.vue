@@ -1,10 +1,10 @@
 <template>
-    <!--로그인 헤더-->
-    <div v-if="status" class="card flex justify-center">
-        <Button label="Login" @click="visible = true" />
+    <!--로그인시 헤더-->
+    <div v-if="storageId" class="card flex justify-center">
+        <Button label="Log out" @click="logout"></Button>
     </div>
 
-    <!--비로그인 헤더-->
+    <!--비로그인시 헤더-->
     <div v-else class="card flex justify-center">
         
         <!--서로 다른 모달창을 띄우는 버튼-->
@@ -17,13 +17,12 @@
                 <mdSignInfo 
                     v-if="btnIndex === 'join'" 
                     @switch-modal="openModal('joinDetl')"
-                    @close-modal = "closeModal"
-                ></mdSignInfo>
+                    @close-modal = "closeModal"></mdSignInfo>
                 <mdLogin 
                     v-if="btnIndex === 'login'" 
                     @switch-modal="openModal('joinDetl')"
                     @close-modal = "closeModal"
-                ></mdLogin>
+                    @login-success="getStorageId"></mdLogin>
                 <mdSignDetail 
                     v-if="btnIndex === 'joinDetl'" 
                     @submit-success="openModal('login')"></mdSignDetail>
@@ -36,30 +35,36 @@
 </template>
 
 <script setup>
-import { ref} from 'vue';
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
-import mdSignInfo from "../modal/mdSignInfo.vue";
-import mdLogin from "../modal/mdLogin.vue";
-import mdSignDetail from "../modal/mdSignDetail.vue";
+import mdSignInfo from "@/components/modal/mdSignInfo.vue";
+import mdLogin from "@/components/modal/mdLogin.vue";
+import mdSignDetail from "@/components/modal/mdSignDetail.vue";
+import { onMounted, ref } from 'vue';
 
-defineProps(['status']);
-
+// default setting
 const btnIndex = ref('');
 const visible = ref(false);
+const storageId = ref('');
 
-const openModal = (index) => {
-    btnIndex.value = index;
-    visible.value = true;
+const openModal = (index) => (btnIndex.value = index, visible.value = true)
+const closeModal = () => (visible.value = false)
+
+const getStorageId = () => {
+    storageId.value = localStorage.getItem('savedUserId');
 }
 
-const closeModal = () => {
-    visible.value = false;
+const logout = () => {
+    alert('로그아웃됩니다.');
+    localStorage.removeItem('savedUserId');
+    getStorageId();
 }
 
+onMounted(() => {
+    getStorageId();
+});
 </script>
-
-<style>
-@import "../../assets/css/modal.css";
+<style scoped>
+@import "@/assets/css/modal.css";
 @import 'primeicons/primeicons.css';
 </style>

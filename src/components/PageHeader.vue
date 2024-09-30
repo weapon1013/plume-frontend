@@ -2,15 +2,17 @@
     <header class="layout-topbar">
         <div class="layout-topbar-start">
             <router-link to="/">
-                <Plumelogo style="margin-bottom: 20px;"></Plumelogo>
+                <Plumelogo class="mb-3"></Plumelogo>
             </router-link>
             <div id="search-container" class="flex align-items-center">
-                <InputText type="text" class="search-input" placeholder="검색어를 입력하세요." 
-                            v-bind:class="{ open: isOpen }" @keyup.enter="toggleSearch()" 
+                <InputText  type="text" 
                             v-model="searchInput"
-                />
-                <button class="search-btn" @click="toggleSearch">
-                    <i class="pi pi-search" aria-hidden="true"></i>
+                            v-bind:class="{ open: isOpen }" 
+                            @keyup.enter="toggleSearch()" 
+                            placeholder="검색어를 입력하세요." 
+                            class="search-input" />
+                <button @click="toggleSearch" class="search-btn">
+                    <i aria-hidden="true" class="pi pi-search"></i>
                 </button>
             </div>
         </div>
@@ -37,42 +39,34 @@
             </ul>
         </div>
         <div class="layout-topbar-end">
-            <LoginStatic :status='loginStat'></LoginStatic>
+            <LoginStaticHeader></LoginStaticHeader>
         </div>
     </header>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import LoginStatic from './btn/LoginStaticHeader.vue';
+import LoginStaticHeader from './btn/LoginStaticHeader.vue';
 import Plumelogo from './btn/PlumeLogo.vue';
 import InputText from 'primevue/inputtext';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+// default setting
 const route = useRoute();
-const loginCheck = ref(false);
-const loginStat = ref(loginCheck.value);
 const isOpen = ref(false);
 const searchInput = ref('');
 
+// 상단 메뉴바 활성화
 const isActive = (path) => route.path === path;
 
-const toggleSearch = () => {
-  if (isOpen.value) {
-    fn_search();
-  } else {
-    isOpen.value = !isOpen.value;
-  }
-};
+// 검색창 열리고 닫히는 상태 제어
+const toggleSearch = () => { isOpen.value ? fn_search() : isOpen.value = !isOpen.value; }
 
+// 검색 axios
+// TODO : 추후 검색 axios 추가해야함
 function fn_search() {
   alert(searchInput.value);
 }
-
-// 로그인 상태 동기화
-watch(loginCheck, (newVal) => {
-  loginStat.value = newVal;
-});
 </script>
 
 <style scoped>
@@ -83,9 +77,7 @@ watch(loginCheck, (newVal) => {
 #search-container { display: flex;align-items: center;margin-left: 2rem;height: 35px;}
 .search-input {width: 0;height: 2rem; padding: 0; border: none; transition: width 0.5s ease, padding 0.5s ease; opacity: 0; visibility: hidden;}
 .search-input.open { width: 12rem; padding-left: 1rem; opacity: 1; visibility: visible; background-color: #eef2fb;}
-.search-btn {width: 2rem; height: 2rem; background-color: #eff2fb; border: 1px solid #CBD5E1; border-radius: 10px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;}
+.search-btn {width: 2rem; height: 2rem; background-color: #eff2fb; border: 1px solid #CBD5E1; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.5s ease;}
 .search-input.open ~ .search-btn {transform: translateX(0.5rem);}
-
 .list-none li .red-dot { position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background-color: #db193d8a; border-radius: 50%; }
 </style>

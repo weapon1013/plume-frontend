@@ -12,42 +12,40 @@
                 </div>
             </div>
         </router-link>
-            <ul class="list-none p-3">
-                <li>
-                    <router-link to="/feed" class="p-3 align-items-center flex">
-                        <i class="pi pi-th-large mr-2"></i>
-                        <span>전체</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/feed" class="p-3 align-items-center flex">
-                        <i class="pi pi-lock mr-2"></i>
-                        <span>나</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/feed" class="p-3 align-items-center flex">
-                        <i class="pi pi-user-plus mr-2"></i>
-                        <span>팔로우</span>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="/feed" class="p-3 align-items-center flex">
-                        <i class="pi pi-users mr-2"></i>
-                        <span>그룹</span>
-                    </router-link>
-                </li>
-            </ul>
-            <div class="mt-auto">
-                지출현황
-            </div>
+        <ul class="list-none p-3">
+            <li>
+                <router-link to="/feed" class="p-3 align-items-center flex">
+                    <i class="pi pi-th-large mr-2"></i>
+                    <span>전체</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/feed" class="p-3 align-items-center flex">
+                    <i class="pi pi-lock mr-2"></i>
+                    <span>나</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/feed" class="p-3 align-items-center flex">
+                    <i class="pi pi-user-plus mr-2"></i>
+                    <span>팔로우</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/feed" class="p-3 align-items-center flex">
+                    <i class="pi pi-users mr-2"></i>
+                    <span>그룹</span>
+                </router-link>
+            </li>
+        </ul>
+        <div class="mt-auto">
+            지출현황
+        </div>
     </aside>
 </template>
 
-<script>
-export default {
+<script setup>
 
-}
 </script>
 
 <style>
