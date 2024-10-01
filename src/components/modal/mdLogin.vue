@@ -30,7 +30,6 @@
                 <div class="flat-line"></div>
             </div>
             <Button type="button" label="카카오로그인" @click="closeModal" severity="help" raised></Button>
-            <Button type="button" label="test" @click="test" severity="secondary" raised></Button>
         </div>
     </div>
 </template>
@@ -52,7 +51,7 @@ const emit = defineEmits(['switch-modal', 'close-modal', 'login-success']);
 const closeModal = () => { emit('close-modal') };
 const switchModal = () => { emit('switch-modal') };
 
-// 로그인
+// 로그인처리
 const submit = () => {
     const data = {
         userId: userId.value,
@@ -62,23 +61,16 @@ const submit = () => {
 axiosPost("auth/login", data)
     .then((response) => {
         if(response.status === 200){
-            alert('성공!')
+            alert('로그인 되었습니다')
             localStorage.setItem('savedUserId', userId.value);
             emit('login-success');
-            console.log(response.status, response.data);
         }
     })
     .catch((e) => {
-        alert('실패 ㅜㅜ');
+        alert('로그인 실패했습니다.');
         console.log(`${e.name}(${e.code}): ${e.message})`);
     });
 };
-
-const test = () => {
-    console.log(localStorage.getItem('savedUserId'));
-    localStorage.setItem('savedUserId', userId.value);
-    emit('login-success');
-}
 </script>
 
 <style>

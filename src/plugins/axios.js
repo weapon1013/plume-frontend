@@ -1,4 +1,6 @@
+import { getToken } from "@/assets/js/tokenUtils.js";
 import axios from "axios"
+
 
 const BASE_URL = 'http://localhost:8080/api/v1';
 
@@ -14,7 +16,6 @@ const axiosSet = axios.create({
   timeout: 1000,
   headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      'Authorization' : 'Bearer ' // + 로그인 후 AccessToken 값을 쿠키로 저장하고, Bearer 뒤에 쿠키에 저장된 토큰 값을 붙여서 API 요청하면 됨
   },
   withCredentials: true,
 });
@@ -30,3 +31,21 @@ const axiosPost = (url,data) => {
 }
 
 export {axiosGet, axiosPost, axiosSet};
+
+// 요청 인터셉터 추가하기
+axiosSet.interceptors.request.use(
+  (config) => {
+    const accessToken = getToken();
+    if(accessToken){
+      config.headers.Authorization  = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
+// 응답 인터셉터 추가하기
+axios.interceptors.request.use()

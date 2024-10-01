@@ -10,7 +10,7 @@
         <!--서로 다른 모달창을 띄우는 버튼-->
         <Button label="Sign up" @click="openModal('join')" />
         <Button label="Login" @click="openModal('login')" />
-
+        <Button label="ㅎㅇ" @click="test();"></Button>
         <!--모달창-->
         <Dialog v-model:visible="visible" modal header="">
             <div class="modal_container">
@@ -22,7 +22,7 @@
                     v-if="btnIndex === 'login'" 
                     @switch-modal="openModal('joinDetl')"
                     @close-modal = "closeModal"
-                    @login-success="getStorageId"></mdLogin>
+                    @login-success="getStorageId(storageId)"></mdLogin>
                 <mdSignDetail 
                     v-if="btnIndex === 'joinDetl'" 
                     @submit-success="openModal('login')"></mdSignDetail>
@@ -47,19 +47,25 @@ const btnIndex = ref('');
 const visible = ref(false);
 const storageId = ref('');
 
+// 모달창 열기
 const openModal = (index) => (btnIndex.value = index, visible.value = true)
+
+// 모달창 닫기
 const closeModal = () => (visible.value = false)
 
+// localStorage의 아이디값 가져오기
 const getStorageId = () => {
     storageId.value = localStorage.getItem('savedUserId');
 }
 
+// 로그아웃 처리
 const logout = () => {
     alert('로그아웃됩니다.');
     localStorage.removeItem('savedUserId');
     getStorageId();
 }
 
+// 새로고침시, 로그인 체크하기
 onMounted(() => {
     getStorageId();
 });
