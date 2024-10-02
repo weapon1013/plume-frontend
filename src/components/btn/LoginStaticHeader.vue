@@ -42,6 +42,7 @@ import mdLogin from "@/components/modal/mdLogin.vue";
 import mdSignDetail from "@/components/modal/mdSignDetail.vue";
 import { onMounted, ref } from 'vue';
 
+
 // default setting
 const btnIndex = ref('');
 const visible = ref(false);
@@ -69,6 +70,7 @@ const logout = () => {
 onMounted(() => {
     getStorageId();
 });
+
 </script>
 <style scoped>
 @import "@/assets/css/modal.css";

@@ -10,7 +10,7 @@ import "primeflex/primeflex.css";
 import "primeflex/themes/primeone-light.css";
 import "primeicons/primeicons.css";
 import Aura from '@primevue/themes/aura';
-
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App).use(store);
 
@@ -30,5 +30,6 @@ app.use(PrimeVue, {
       }
   }
 });
+app.use(ToastService);
 
 app.mount('#app');
