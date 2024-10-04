@@ -10,8 +10,7 @@
         <!--서로 다른 모달창을 띄우는 버튼-->
         <Button label="Sign up" @click="openModal('join')" />
         <Button label="Login" @click="openModal('login')" />
-        <Toast/>
-        <Button label="ㅎㅇ" @click="test();"></Button>
+        
         <!--모달창-->
         <Dialog v-model:visible="visible" modal header="">
             <div class="modal_container">
@@ -42,12 +41,7 @@ import mdSignInfo from "@/components/modal/mdSignInfo.vue";
 import mdLogin from "@/components/modal/mdLogin.vue";
 import mdSignDetail from "@/components/modal/mdSignDetail.vue";
 import { onMounted, ref } from 'vue';
-import { useToast } from "primevue/usetoast";
-
-const toast = useToast();
-function test(){ 
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'ㅎㅇㅎㅇ', life: 3000 });
-}
+import { wToast} from '@/assets/js/toast.js'
 
 // default setting
 const btnIndex = ref('');
@@ -67,7 +61,7 @@ const getStorageId = () => {
 
 // 로그아웃 처리
 const logout = () => {
-    alert('로그아웃됩니다.');
+    wToast('로그아웃됩니다', '😭로그아웃😭')
     localStorage.removeItem('savedUserId');
     getStorageId();
 }

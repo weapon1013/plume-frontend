@@ -2,6 +2,8 @@ body{
     margin: 0px;
     background-size:cover;
     background-image: url('../img/back_img.jpg');
+    font-family: "SUIT-Regular", "GongGothicMedium", "KOHIBaeumOTF", 'Pretendard-Regular';
+
 }
 
 .layout-wrapper{

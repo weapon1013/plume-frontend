@@ -42,6 +42,7 @@ import Password from 'primevue/password';
 import { ref, defineEmits } from 'vue';
 import Plumelogo from "@/components/btn/PlumeLogo.vue";
 import {axiosPost} from '@/plugins/axios';
+import { sToast, eToast  } from '@/assets/js/toast';
 
 // default setting
 const userId     = ref(null);       // 아이디
@@ -61,13 +62,13 @@ const submit = () => {
 axiosPost("auth/login", data)
     .then((response) => {
         if(response.status === 200){
-            alert('로그인 되었습니다')
+            sToast('로그인 성공💫', 'Login Success')
             localStorage.setItem('savedUserId', userId.value);
             emit('login-success');
         }
     })
     .catch((e) => {
-        alert('로그인 실패했습니다.');
+        eToast('로그인 실패💦', 'Login Error');
         console.log(`${e.name}(${e.code}): ${e.message})`);
     });
 };

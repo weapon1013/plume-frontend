@@ -2,18 +2,13 @@
     <div class="layout-wrapper min-h-screen">
         <PageHeader></PageHeader>
         <router-view></router-view>
+        <Toast position="bottom-right"/>
     </div>
 </template>
 
-<script>
-import PageHeader from "./components/PageHeader.vue";
-
-export default {
-    name: "App",
-    components: {
-        PageHeader, //헤더 페이지 컴포넌트 선언
-    },
-};
+<script setup>
+import PageHeader from "@/components/PageHeader.vue";
+import Toast from 'primevue/toast';
 </script>
 
 <style>

@@ -83,6 +83,7 @@ import InputOtp from 'primevue/inputotp';
 import { ref, defineEmits, watch, computed } from 'vue';
 import { axiosGet, axiosPost} from '@/plugins/axios';
 import { filterValue, validateValue } from '@/assets/js/common.js';
+import { sToast, wToast, eToast } from '@/assets/js/toast';
 
 const emit = defineEmits(['submit-success']);
 
@@ -103,8 +104,8 @@ const disalbedPw = ref(false);      // 비밀번호 확인 상태
 
 const idHelpText = ref('영문(소문자), 숫자 조합 (4-10자)');
 const pwHelpText = ref('영문(대소문자),숫자,특수문자 조합 (8-16자)');
-const pwHelpText2 = ref(' ');
-const emailHelpText = ref(' ');
+const pwHelpText2 = ref('');
+const emailHelpText = ref('');
 
 // section setting
 const showSections = ref({
@@ -122,38 +123,37 @@ const goToSection = (section) => {
 // 수입 텍스트 동적으로 변경
 const incomeText = computed(() => {
     if (incomeVal.value == 1) {
-    return '연2000 미만';
-  } else if (incomeVal.value == 2) {
-    return '연2000 이상 - 연 5000 미만';
-  } else if (incomeVal.value == 3) {
-    return '연2000 이상 - 연 8000 미만';
-  } else {
-    return '연8000 초과';
-  }
+        return '연2000 미만';
+    } else if (incomeVal.value == 2) {
+        return '연2000 이상 - 연 5000 미만';
+    } else if (incomeVal.value == 3) {
+        return '연2000 이상 - 연 8000 미만';
+    } else {
+        return '연8000 초과';
+    }
 });
 
 // 아이디 중복체크
 const idCheck = () => {
-  const data = {
-    checkStr: idVal.value,  // 아이디 값
-    type: 'id'              // 체크 타입 (id or nick)
-  };
+    const data = {
+        checkStr: idVal.value,  // 아이디 값
+        type: 'id'              // 체크 타입 (id or nick)
+    };
   
-  axiosGet("auth/check", data)
+    axiosGet("auth/check", data)
     .then((response) => {
       var idExists = response.data.data.check;
       if (response.status === 200) {
         if(!idExists){
-            alert('성공');
+            sToast('아이디 사용가능😎', 'Id Check Success');
             isIdBtnHid.value = true;   // 버튼 숨기기
             disalbedId.value = true;   // input 비활성화
         } else {
-            alert('이미 사용중인 아이디입니다.');
+            wToast('아이디 사용불가능😵', 'Id Check Error');
         }
       }
-    })
-    .catch((e) => {
-        alert('실패')
+    }).catch((e) => {
+        eToast('잠시 후에 다시 시도해주세요😱','Server Error')
         console.log(`${e.name}(${e.code}): ${e.message})`);
     });
 };
@@ -163,17 +163,18 @@ const Emailsend = () => {
     const data = {
         userEmail: emailVal.value      // 이메일
     };
+
     axiosPost("auth/email", data)
     .then((response) => {
-        console.log(response);
-    if(response.status == 200){
-        alert('성공');
-        isEmailBtnHid.value = true;     // 버튼 숨기기
-        disalbedEmail.value = true;     // input 비활성화
-    }
-    })
-    .catch((e) => {
-        alert('실패');
+        if(response.status == 200){
+            sToast('이메일 전송성공💌💨', 'Email Send Success');
+            isEmailBtnHid.value = true;     // 버튼 숨기기
+            disalbedEmail.value = true;     // input 비활성화
+        } else {
+            wToast('이메일 전송실패🏴‍☠️', 'Email Send Fail')
+        }
+    }).catch((e) => {
+        eToast('잠시 후에 다시 시도해주세요😱','Server Error')
         console.log(`${e.name}(${e.code}): ${e.message})`);
     })
 }
@@ -185,13 +186,13 @@ const OtpCheck = () => {
     };
     axiosGet("auth/email", data)
     .then((response) => {
-        console.log(response);
-    if(response.status == 200){
-        alert('성공');
-    }
-    })
-    .catch((e) => {
-        alert('실패');
+        if(response.status == 200){
+            sToast('인증번호 확인성공✨', 'Otp Check Success');
+        } else {
+            wToast('인증번호 확인실패⚠', 'Otp Check Fail')
+        }
+    }).catch((e) => {
+        eToast('잠시 후에 다시 시도해주세요😱','Server Error')
         console.log(`${e.name}(${e.code}): ${e.message})`);
     })
 }
@@ -208,13 +209,13 @@ const submit = () => {
     }
 
     if(!disalbedId.value){
-        alert('아이디 중복체크를 해주세요')
+        wToast('아이디 중복체크⚠','Check required information')
         return false;
     } else if(!disalbedEmail.value){
-        alert('이메일 중복체크를 해주세요')
+        wToast('이메일 중복체크⚠','Check required information')
         return false;
     } else if(!disalbedPw.value){
-        alert('비밀번호를 확인해주세요')
+        wToast('비밀번호를 확인⚠','Check required information')
         return false;
     }
 
@@ -222,14 +223,13 @@ const submit = () => {
         axiosPost("auth/sign", data)
         .then((response) => {
             if (response.status == 200) {
-                alert('성공!')
+                sToast('🎉회원가입 완료🎉', 'Welcome to Plume')
                 console.log(response.status, response.data);
                 emit('submit-success');
             }
-        })
-        .catch((e) => {
-                alert('실패 ㅜㅜ');
-                console.log(`${e.name}(${e.code}): ${e.message})`);
+        }).catch((e) => {
+            eToast('잠시 후에 다시 시도해주세요😱','Server Error')
+            console.log(`${e.name}(${e.code}): ${e.message})`);
         })
     }
 };
@@ -243,7 +243,7 @@ watch(idVal, (newValue) => {
     }
 });
 
-//비밀번호
+// 비밀번호
 watch(passVal, (newValue) => {
     if(!filterValue(newValue, 2)){
         pwHelpText.value = '영문(대소문자),숫자,특수문자 조합 (8-16자)';
@@ -252,7 +252,7 @@ watch(passVal, (newValue) => {
     }
 });
 
-//비밀번호 확인
+// 비밀번호 확인
 watch([passVal,passVal2], ([newPassVal,newPassVal2]) => {
     if(newPassVal2){
         if(newPassVal !== newPassVal2){
@@ -265,7 +265,7 @@ watch([passVal,passVal2], ([newPassVal,newPassVal2]) => {
     }
 });
 
-//이메일
+// 이메일
 watch(emailVal, (newValue) => {
     if(!filterValue(newValue, 3)){
         emailHelpText.value = '이메일 형식 확인';

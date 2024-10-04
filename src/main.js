@@ -12,13 +12,15 @@ import "primeicons/primeicons.css";
 import Aura from '@primevue/themes/aura';
 import ToastService from 'primevue/toastservice';
 
-const app = createApp(App).use(store);
+export const app = createApp(App).use(store);
 
 // vue router를 app에 등록
 app.use(router);    
 
+// toast를 app에 등록
+app.use(ToastService);
+
 // primevue app에 등록
-// app.use(PrimeVue);
 app.use(PrimeVue, {
   // Default theme configuration
   theme: {
@@ -30,6 +32,5 @@ app.use(PrimeVue, {
       }
   }
 });
-app.use(ToastService);
 
 app.mount('#app');

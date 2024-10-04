@@ -1,3 +1,5 @@
+import { wToast } from "./toast";
+
 // 형식 검사 (아이디, 비밀번호, 이메일)
 export function filterValue(chkValue, type){
     // 추가적인 로직을 여기에 작성
@@ -30,7 +32,8 @@ export const validateValue = (obj) =>{
 
     for(const key in obj){
         if(isEmpty(obj[key])){
-            alert(keyMap[key] + '입력해주세요.')
+            wToast(keyMap[key] + ' 입력 필요❗','Check required information');
+
             return false;
         }
     }
