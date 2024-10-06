@@ -189,7 +189,7 @@ const OtpCheck = () => {
         if(response.status == 200){
             sToast('인증번호 확인성공✨', 'Otp Check Success');
         } else {
-            wToast('인증번호 확인실패⚠', 'Otp Check Fail')
+            wToast('인증번호 확인실패⛔', 'Otp Check Fail')
         }
     }).catch((e) => {
         eToast('잠시 후에 다시 시도해주세요😱','Server Error')
@@ -209,13 +209,13 @@ const submit = () => {
     }
 
     if(!disalbedId.value){
-        wToast('아이디 중복체크⚠','Check required information')
+        wToast('아이디 중복체크⛔','Check required information')
         return false;
     } else if(!disalbedEmail.value){
-        wToast('이메일 중복체크⚠','Check required information')
+        wToast('이메일 중복체크⛔','Check required information')
         return false;
     } else if(!disalbedPw.value){
-        wToast('비밀번호를 확인⚠','Check required information')
+        wToast('비밀번호를 확인⛔','Check required information')
         return false;
     }
 
