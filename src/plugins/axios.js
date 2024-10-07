@@ -1,8 +1,8 @@
 import { getToken } from "@/assets/js/tokenUtils.js";
 import axios from "axios"
 
-
-const BASE_URL = 'http://localhost:8080/api/v1';
+// 일시적으로 잠시 주석처리 나중에 풀 것
+//const BASE_URL = 'http://localhost:8080/api/v1';
 
 // 쿼리스트링 변환 함수
 const appendQueryString = (data) => {
@@ -12,8 +12,9 @@ const appendQueryString = (data) => {
 
 // Axios 인스턴스 생성 함수
 const axiosSet = axios.create({
-  baseURL : BASE_URL,
-  timeout: 1000,
+  // 일시적으로 잠시 주석처리 나중에 풀 것
+  //baseURL : BASE_URL,
+  timeout: 5000,
   headers: {
       'Content-Type': 'application/json;charset=utf-8',
   },
@@ -38,6 +39,9 @@ axiosSet.interceptors.request.use(
     const accessToken = getToken();
     if(accessToken){
       config.headers.Authorization  = `Bearer ${accessToken}`;
+    } else {
+      // 토큰이 없을 경우 'Bearer '만 설정
+      config.headers.Authorization = 'Bearer ';
     }
     return config;
   },

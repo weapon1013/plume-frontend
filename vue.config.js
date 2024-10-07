@@ -1,5 +1,4 @@
-const { defineConfig } = require('@vue/cli-service')
-
+const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 
 module.exports = {
@@ -10,12 +9,10 @@ module.exports = {
       Object.assign(definitions[0], {
         __VUE_OPTIONS_API__: 'true',
         __VUE_PROD_DEVTOOLS__: 'false',
-        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
-      })
-      return definitions
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+      });
+      return definitions;
     });
-    config.resolve.alias
-      .set('@', path.resolve(__dirname, 'src/'));
+    config.resolve.alias.set('@', path.resolve(__dirname, 'src/'));
   },
-
-}
+};

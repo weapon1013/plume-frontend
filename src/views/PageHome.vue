@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-      <weather style="margin-top: 10rem;border: 1px solid black;"></weather>
+      <weather></weather>
       <section></section>
       <section></section>
     </div>
@@ -9,3 +9,7 @@
 <script setup>
 import weather from '@/components/wgt/WeatherWidget.vue';
 </script>
+
+<style>
+  .home{margin-top: 15rem;}
+</style>

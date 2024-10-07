@@ -1,5 +1,7 @@
 // 쿠키 가져오기
-export const getToken = getCookie('accessToken')
+export function getToken(){
+    return getCookie('accessToken');
+}
 
 export function getCookie(name){
     const cookies = document.cookie.split('; ');
