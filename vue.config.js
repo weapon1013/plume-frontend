@@ -15,4 +15,13 @@ module.exports = {
     });
     config.resolve.alias.set('@', path.resolve(__dirname, 'src/'));
   },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'https://apis.data.go.kr',
+        changeOrigin: true,
+        pathRewrite: { '^/api': '' },
+      },
+    },
+  },
 };
