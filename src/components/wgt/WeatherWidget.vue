@@ -1,40 +1,38 @@
 <template>
-    <button @click="getGeolocation()">날씨버튼</button>
     <div class="flex gap-4">
         <!-- Today's weather card -->
         <div class="flex justify-content-between w-26rem align-items-center text-center p-4 surface-100 shadow-2">
             <div class="text-xl font-bold m-1">Today</div>
             <div class="text-sm">{{ todayDate }}<br>{{ todayDay }}</div>
             <div class="text-6xl font-bold m-2">{{ TMP }}°</div>
-            <img :src="weatherIcon" alt="Sunny" class="w-4rem h-4rem">
+            <img :src="weatherIcon" alt="Sunny" class="w-4rem h-4rem" >
         </div>
-            <p>최저기온 : {{ TMN }}°</p>
-            <p>최고기온 : {{ TMX }}°</p>
         <!-- Tomorrow's weather card -->
         <div class="flex justify-content-between w-26rem align-items-center text-center p-4 surface-overlay shadow-2">
             <div class="text-xl font-bold m-1">Tomorrow</div>
             <div class="text-sm">{{ tomorrowDate }}<br>{{ tomorrowDay }}</div>
-            <div class="text-6xl font-bold m-2">16°</div>
-            <img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Rainy" class="w-4rem h-4rem">
+            <div class="text-6xl font-bold m-2">{{ TMPTmr }}°</div>
+            <img :src="weatherIcon" alt="Sunny" class="w-4rem h-4rem" >
         </div>
     </div>
 </template>
+
 <script setup>
 import { axiosGet } from '@/plugins/axios';
 import { onMounted, ref } from 'vue';
-import {dfs_xy_conv} from '@/assets/js/common.js'
+import { dfs_xy_conv } from '@/assets/js/common.js'
 
-const weekEngName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const todayDate = ref('');
-const todayDay = ref('');
-const tomorrowDate = ref('');
-const tomorrowDay = ref('');
+const weekEngName   = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];       // 요일(영어)
+const todayDate     = ref('');      // 오늘 날짜
+const todayDay      = ref('');      // 오늘 요일
+const tomorrowDate  = ref('');      // 내일 날짜
+const tomorrowDay   = ref('');      // 내일 요일
 
-const weatherIcon = ref('');
-const TMP = ref('');        // 1시간 기온
-const TMN = ref('');        // 일 최저기온
-const TMX = ref('');        // 일 최고기온
+const weatherIcon   = ref(require('@/assets/img/weather/question-mark.png'));                               // 기본 날씨 아이콘
+const TMP           = ref('--');            // 현재기온
+const TMPTmr        = ref('--');            // 내일기온
 
+// 
 onMounted(() => {
     initializeDates();
     getGeolocation()
@@ -70,7 +68,7 @@ function getGeolocation(){
         position => {
             const base = getBaseDate();
             const pos = dfs_xy_conv('toXY', position.coords.latitude, position.coords.longitude);       // 위도와 경도를 기상청에서 쓰는 x,y축으로 변경
-            getWeather(pos.x, pos.y, base.baseDate, base.baseTime);
+            getWeather(pos.x, pos.y, base.baseDate, base.baseTime, base.nowHours);
         },
         error => {
             console.error('Error occurred: ', error);
@@ -87,27 +85,19 @@ function getBaseDate(){
     var hours = today.getHours();
     var rs = {};
 
-    if (hours == 0) {
-        hours = 24;
+    // 5시부터 발표니까 5시 이전이면 이전날짜. 5시 이후면 오늘날짜 => 무조건 6시 기준으로 다 가져오기
+    if (hours <= 5) {
         day--;
     }
-    hours -= 2;        // (기상청에서 제공하는 데이터의 업데이트가 느릴 수 있어서 1시간 전 데이터로 변경)
-    var baseTime = '';  // 현 시간 변수 ('0705' 형식으로 표현)
-    if (hours < 10) {
-        baseTime += '0';
-    }
-
-    baseTime += hours;
-    baseTime += '00';
-    
+    var baseTime = '0500';  // 현 시간 변수 ('0705' 형식으로 표현)
     rs['baseDate'] = year + month + day;
-    rs['baseTime'] = baseTime
-    
+    rs['baseTime'] = baseTime;
+    rs['nowHours'] = hours + '00';
     return rs;
 }
 
 // 날씨 가져오기
-function getWeather(xPos, yPos, baseDate, baseTime){
+async function getWeather(xPos, yPos, baseDate, baseTime, nowHours){
     const key = 'Agq0eONiaOCbZSk615/aE5/0/i3U45shsush6jD4YPx2J0qBufB3QJQ7hyvgUXmr1qM4RNDgIuKmXmaYwNOdCQ==';
     const data = {
          serviceKey : key			    // 공공데이터포털에서 받은 인증키
@@ -118,9 +108,21 @@ function getWeather(xPos, yPos, baseDate, baseTime){
         ,base_time	: baseTime			// 06시 발표(정시단위)
         ,nx 		: xPos			    // 예보지점의 X 좌표값
         ,ny			: yPos			    // 예보지점의 Y 좌표값
+        ,nowHours   : nowHours          // 현재 시각
+    };
+
+    try {
+        // 두 API 요청을 동시에 처리
+        const [todayWeather, tomorrowWeather] = await Promise.all([
+            getTodayWeather(data),
+            getTomorrowWeather(data),
+        ]);
+
+        console.log('Today Weather:', todayWeather);
+        console.log('Tomorrow Weather:', tomorrowWeather);
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
     }
-    getTodayWeather(data);
-    // getTomorrow(data);
 }
 
 // 오늘 날씨 :: 현재 날씨 상황 제공 - 초단기실황
@@ -128,40 +130,61 @@ function getTodayWeather(data){
     const url = '/api/1360000/VilageFcstInfoService_2.0/getVilageFcst';
     axiosGet(url, data)
     .then((response) => {
-        if(response.status == '200'){
-            const items = response.data.response.body.items.item;
-            iconInit(items);        // 날씨 아이콘 추가
-            items.slice(0, 11).forEach((item) => {
-                switch (item.category) {
-                    case 'TMP':     // 1시간 기온
-                        TMP.value=Math.round(item.fcstValue);
-                        break;
-                    case 'TMN':     // 일 최저기온
-                        TMN.value=Math.round(item.fcstValue);
-                        break;
-                    case 'TMX':     // 일 최고기온
-                        TMX.value=Math.round(item.fcstValue);
-                        break;
-                }
+        const resultCode = response.data.response.header.resultCode;
+        if(resultCode == '00'){
+            const items = response.data.response.body.items.item;                   // 전체 데이터
+            const filteredItems = items.filter(item =>                              // 필터링(오늘날짜 & 현재시각) 데이터
+                item.fcstDate === data.base_date && item.fcstTime === data.nowHours
+            );
+            iconInit(filteredItems);        // 날씨 아이콘 추가
+            filteredItems.forEach((item) => {
+                if(item.category == 'TMP') TMP.value=Math.round(item.fcstValue);
             });
+        } else if (resultCode == '03'){
+            alert('NO_DATA');
         }
     }).catch((e) => {
-        console.log(`${e.name}(${e.code}): ${e.message})`);
+        if(e.code === 'ECONNABORTED'){
+            console.log('요청이 타임아웃되었습니다.');
+            initializeDates();
+            getGeolocation();
+        } else {
+            console.error('요청 실패:', e);
+        }
     });
 }
 
 // 내일 날씨 :: 내일 날씨 예측 - 단기예보
-// function getTomorrow(data){
-//     const url = '/api/1360000/VilageFcstInfoService_2.0/getVilageFcst';
+function getTomorrowWeather(data){
+    const tmrDate = tomorrowDate.value.replace(/-/g, '');
+    const url = '/api/1360000/VilageFcstInfoService_2.0/getVilageFcst';
+    axiosGet(url, data)
+    .then((response) => {
+        const resultCode = response.data.response.header.resultCode;
+        if(resultCode == '00'){
+            const items = response.data.response.body.items.item;                   // 전체 데이터
+            const filteredItems = items.filter(item =>                              // 필터링(내일날짜 & 05시) 데이터
+                item.fcstDate === tmrDate && item.fcstTime === data.base_time,
+            );
+            iconInit(filteredItems);        // 날씨 아이콘 추가
+            filteredItems.forEach((item) => {
+                if(item.category == 'TMP') TMPTmr.value=Math.round(item.fcstValue);
+            });
+        } else if (resultCode == '03'){
+            alert('NO_DATA');
+        }
+    }).catch((e) => {
+        if(e.code === 'ECONNABORTED'){
+            console.log('요청이 타임아웃되었습니다.')
+            initializeDates();
+            getGeolocation();
+        } else {
+            console.error('요청 실패:', e);
+        }
+    });
+}
 
-//     axiosGet(url, data)
-//     .then((response) => {
-//         console.log(response);
-//     }).catch((e) => {
-//         console.log(`${e.name}(${e.code}): ${e.message})`);
-//     });
-// }
-
+// 날씨에 맞는 아이콘 추가
 function iconInit(items){
     var sky = items[5].fcstValue
     var rain = items[6].fcstValue
