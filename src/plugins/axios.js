@@ -14,7 +14,7 @@ const appendQueryString = (data) => {
 const axiosSet = axios.create({
   // 일시적으로 잠시 주석처리 나중에 풀 것
   //baseURL : BASE_URL,
-  timeout: 5000,
+  timeout: 10000,
   headers: {
       'Content-Type': 'application/json;charset=utf-8',
   },
