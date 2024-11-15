@@ -1,7 +1,7 @@
 <template>
     <aside class="layout-sidebar flex flex-column">
         <router-link to="/feed">
-            <div class="flex pl-5 pt-5 pr-3 gap-2">
+            <div class="flex px-3 py-5 gap-2 border-bottom-1">
                 <span class="pi-profile align-content-center"><i class="pi pi-user"></i></span>
                 <div class="flex flex-column text-left">
                     <span class="font-semibold">닉네임</span>
@@ -51,8 +51,8 @@
 <style>
 .pi-profile{
     background-color: blueviolet;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 30px;
 }
 </style>

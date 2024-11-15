@@ -42,7 +42,6 @@
 </template>
 
 <script setup>
-/* eslint-disable */
 import { axiosGet } from '@/plugins/axios';
 import { ref } from 'vue';
 import { dfs_xy_conv } from '@/assets/js/common.js'
@@ -58,10 +57,8 @@ const minTMP        = ref('--');    // 오늘최저기온
 const maxTMP        = ref('--');    // 오늘최고기온
 const minTMPTmr     = ref('--');    // 내일최저기온
 const maxTMPTmr     = ref('--');    // 내일최고기온                                                                                                                                                                                   
-
 const weatherIconToday = ref(require('@/assets/img/2.gif'));
 const weatherIconTomorrow = ref(require('@/assets/img/2.gif'));
-
 const address = ref('위치를 찾는 중...');
 
 // 오늘과 내일 날짜 초기화

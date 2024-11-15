@@ -23,12 +23,6 @@ module.exports = {
         pathRewrite: { '^/api': '' },
       },
     },
-    '/v2/local': {
-        target: 'https://dapi.kakao.com',
-        changeOrigin: true,  // 원본을 변경하지 않고 요청을 전달
-        pathRewrite: {
-          '^/v2/local': '/v2/local', // API 경로 리팩토링
-        },
-      },
+    
   },
 };
