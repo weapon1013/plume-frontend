@@ -2,19 +2,15 @@
     <Sidebar></Sidebar>
     <div class="layout-content-wrapper">
       <div class="col-md-9">
-        <h5>This is an Feed page</h5>
+        <div class="h-7rem bg-yellow-400"></div>
+        <FeedList></FeedList>
       </div>
     </div>
 </template>
 
-<script>
+<script setup>
 import Sidebar from '../components/PageLeft.vue'
-export default {
-  name: 'App',
-  components: {
-    Sidebar,     //사이드 페이지 컴포넌트 선언
-  }
-}
+import FeedList from '../components/List/FeedList.vue'
 </script>
 
 <style scoped>

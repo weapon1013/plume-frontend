@@ -12,7 +12,7 @@
                 </div>
             </div>
         </router-link>
-        <ul class="list-none p-3">
+        <ul class="list-none p-3 flex-grow-1">
             <li>
                 <router-link to="/feed" class="p-3 align-items-center flex">
                     <i class="pi pi-th-large mr-2"></i>
@@ -38,7 +38,7 @@
                 </router-link>
             </li>
         </ul>
-        <div class="mt-auto">
+        <div class="h-10rem border-1">
             지출현황
         </div>
     </aside>
