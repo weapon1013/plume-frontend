@@ -3,34 +3,53 @@
         <div class="flex w-auto p-2 m-2 flex-row justify-content-start border-1">
             <!--이미지 section -->
             <div class="slider-container" style="border: 1px solid black">
-                <div class="slider-wrapper">
+                <div class="slider-wrapper" id="slide_list">
                     <img src="../../assets/img/image.png" class="slide active">
                     <img src="../../assets/img/back_img.jpg" class="slide">
                 </div>
                 <div class="slider-controls">
-                    <i class="pi pi-angle-left"></i>
+                    <i class="pi pi-angle-left" onclick=""></i>
                     <i class="pi pi-angle-right"></i>
                 </div>
-                <div class="slider__dot">
+                <div class="slider__dot" id="slde_dot">
                     <!--슬라이드 개수만큼 dot 개수 추가-->
                 </div>
             </div>
             
+            
             <!--내용 section-->
-            <div class="border-1" style="width:100%">
+            <div class="content_wrap">
                 <!-- 프로필 section -->
-                <div class="section">
-
+                <div class="prof" style="border-bottom: 1px solid black;">
+                    <span class="prof_img"><img src="../../assets/img/image.png"></span>
+                    <span class="prof_nick font-semibold">닉네임</span>
                 </div>
-
+                
+                
                 <!-- 본문 section -->
-                <div class="section">
-                    
+                <div class="content_wrapper" style="border-bottom: 1px solid black;">
+                    <div class="prof">
+                        <img src="../../assets/img/image.png">
+                    </div>
+                    <div class="content_wrapper">
+                        <span class="font-semibold">닉네임asdfa</span>
+                        <span class="content_item">
+                            국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
+                        </span>
+                    </div>
                 </div>
 
                 <!-- 댓글 section -->
-                <div class="section">
-                    
+                <div class="reply_wrapper">
+                    <div class="prof">
+                        <img src="../../assets/img/man.png">
+                    </div>
+                    <div class="content_wrapper">
+                        <span class="font-semibold">닉네임asdfa</span>
+                        <span class="content_item">
+                            국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,10 +57,19 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 
 </script>
-
 <style>
+.content_wrap { padding-left: 1rem; width: 100%; }
+.prof { display: flex; padding-top: 0.5rem; gap: 0.3rem; align-items: center; flex-shrink: 0; }
+.prof img { width: 50px; height: 50px; border-radius: 30px; }
+.content_wrapper { display: flex; flex-wrap: nowrap; align-items: center; gap: 0.5rem; width: 100%; }
+.prof_nick { flex-shrink: 0; white-space: nowrap; text-overflow: ellipsis; max-width: 150px; }
+.content_item { display: inline; text-align: left; padding-left: 0.5rem; line-height: 1.5; padding-top: 1rem; word-wrap: break-word;}
+.reply_wrapper { display: flex; flex-wrap: nowrap; align-items: center; gap: 0.5rem; width: 100%; }
+
+
 /* 슬라이더 컨테이너 스타일 */
 .slider-container {
     position: relative;
