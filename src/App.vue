@@ -3,12 +3,14 @@
         <PageHeader></PageHeader>
         <router-view></router-view>
         <Toast position="bottom-right"/>
+        <PageAction></PageAction>
     </div>
 </template>
 
 <script setup>
 import PageHeader from "@/components/PageHeader.vue";
 import Toast from 'primevue/toast';
+import PageAction from "@/components/btn/PageAction.vue";
 </script>
 
 <style>

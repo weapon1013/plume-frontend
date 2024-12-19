@@ -16,7 +16,6 @@
                 </div>
             </div>
             
-            
             <!--내용 section-->
             <div class="content_wrap">
                 <!-- 프로필 section -->
@@ -45,7 +44,7 @@
                         <img src="../../assets/img/man.png">
                     </div>
                     <div class="content_wrapper">
-                        <span class="font-semibold">닉네임asdfa</span>
+                        <div class="prof_nick font-semibold">닉네임asdfasdfasdfa</div>
                         <span class="content_item">
                             국가는 농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
                         </span>
@@ -58,6 +57,7 @@
 
 <script setup>
 /* eslint-disable */
+var count = document.querySelector('slider-wrapper');
 
 </script>
 <style>
